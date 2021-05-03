@@ -5,7 +5,7 @@ import 'semantic-ui-css/semantic.min.css';
 import logo from './logo.png'
 
 
-const Rewards = ({ setSubmission, from, to }) => {
+const Rewards = ({ sayThanks, from, to }) => {
     const inputRef = React.createRef();
     return (
         <Grid textAlign='center' style={{ height: '100vh' }} verticalAlign='middle'>
@@ -25,9 +25,9 @@ const Rewards = ({ setSubmission, from, to }) => {
                                     <Icon name='ethereum' />
                                 </Button.Content></Button>} on='click'>
                                 <Input>
-                                <input type='text' ref={inputRef} placeholder='Ether amount...'/>
-                                    <Button type='submit' onClick={()=>{
-                                        
+                                    <input type='text' ref={inputRef} placeholder='Ether amount...' />
+                                    <Button type='submit' onClick={() => {
+
                                     }}>Tip!</Button>
                                 </Input>
                             </Popup>
@@ -35,7 +35,7 @@ const Rewards = ({ setSubmission, from, to }) => {
                                 animated='vertical'
                                 basic color="blue"
                                 onClick={() => {
-
+                                    sayThanks(0, to)
                                 }}>
                                 <Button.Content hidden>Say thanks!</Button.Content>
                                 <Button.Content visible >

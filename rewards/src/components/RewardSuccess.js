@@ -27,7 +27,7 @@ const RewardsSuccess = ({ isSuccess, setSubmission }) => (
                     )}
                     <Header.Subheader>
                         <Button onClick={() => {
-                           setSubmission(false)
+                           window.close()
                         }}>Go back</Button>
                     </Header.Subheader>
                 </Segment>
