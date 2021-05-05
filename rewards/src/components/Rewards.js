@@ -3,10 +3,12 @@ import React from 'react'
 import { Button, Form, Grid, Icon, Popup, Image, Message, Segment, Input } from 'semantic-ui-react'
 import 'semantic-ui-css/semantic.min.css';
 import logo from './logo.png'
+import Web3 from 'web3'
 
 
-const Rewards = ({ sayThanks, from, to }) => {
+const Rewards = ({ tipReviewer, sayThanks, from, to }) => {
     const inputRef = React.createRef();
+    var amount = 0;
     return (
         <Grid textAlign='center' style={{ height: '100vh' }} verticalAlign='middle'>
             <Grid.Column style={{ maxWidth: 480 }}>
@@ -25,9 +27,13 @@ const Rewards = ({ sayThanks, from, to }) => {
                                     <Icon name='ethereum' />
                                 </Button.Content></Button>} on='click'>
                                 <Input>
-                                    <input type='text' ref={inputRef} placeholder='Ether amount...' />
+                                    <input type='text' ref={inputRef} placeholder='Ether amount...' onChange={()=>{
+                                        amount = inputRef.current.value
+                                    }}/>
                                     <Button type='submit' onClick={() => {
-
+                                        let tip = Web3.utils.toWei(amount.toString(), "ether");
+                                        console.log(tip);
+                                        tipReviewer(0, tip, to)
                                     }}>Tip!</Button>
                                 </Input>
                             </Popup>

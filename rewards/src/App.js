@@ -64,6 +64,7 @@ class App extends Component {
     }
 
     this.sayThanks = this.sayThanks.bind(this);
+    this.tipReviewer = this.tipReviewer.bind(this);
     this.setSubmission = this.setSubmission.bind(this);
   };
 
@@ -73,6 +74,18 @@ class App extends Component {
 
   setSuccess(ok) {
     this.setState({ isSuccess: ok })
+  }
+
+  tipReviewer(id, amount, account) {
+    this.setState({ ready: true });
+    this.state.contract.methods
+      .tipReviewer(id, account)
+      .send({ from: this.state.account, value: amount })
+      .once("receipt", (receipt) => {
+        this.setState({ ready: false });
+        this.setSuccess(true)
+        this.setSubmission(true)
+      });
   }
 
   sayThanks(id, account) {
@@ -100,7 +113,7 @@ class App extends Component {
     return (
       <div>
         {!this.state.isSubmitted ? (
-          <Rewards sayThanks={this.sayThanks} from={this.state.account} to={this.state.to} />
+          <Rewards tipReviewer={this.tipReviewer} sayThanks={this.sayThanks} from={this.state.account} to={this.state.to} />
         ) : (
           <RewardsSuccess isSuccess={this.state.isSuccess} setSubmission={this.setSubmission} />
         )}
