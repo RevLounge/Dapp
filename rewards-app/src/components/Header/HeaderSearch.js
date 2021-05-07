@@ -17,6 +17,7 @@ export default class HeaderSearch extends Component {
                 <GridColumn></GridColumn>
                 <GridColumn textAlign="center">
                   <Image centered
+                    as={Link} to='/'
                     src={logo}
                     size="medium"
                   />

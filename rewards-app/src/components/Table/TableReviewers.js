@@ -3,6 +3,7 @@ import { Header, Table, Image, Icon, Label, Button, Search, Container, Segment }
 //import Identicon from "identicon.js";
 import avatar from './matthew.png'
 import avatar2 from './daniel.jpg'
+import {Link} from 'react-router-dom'
 
 
 export default class HeaderSearch extends Component {
@@ -67,7 +68,7 @@ export default class HeaderSearch extends Component {
                                         spaced='right'
                                         src={avatar2}
                                     />
-                                    <Header.Content>Luis Vazquez Eminencia</Header.Content>
+                                    <Header.Content as={Link} to='/profile'>Luis Vazquez Eminencia</Header.Content>
                                 </Header>
                             </Table.Cell>
                             <Table.Cell textAlign='center' >
