@@ -1,4 +1,3 @@
-import logo from './logo.svg';
 import './App.css';
 import {
   BrowserRouter as Router,
@@ -9,6 +8,7 @@ import {
 import HeaderSearch from './components/Header/HeaderSearch';
 import TableReviewers from './components/Table/TableReviewers';
 import LoginForm from './components/LoginForm/LoginForm';
+import Profile from './components/Profile/Profile';
 
 function App() {
 
@@ -25,6 +25,8 @@ function App() {
         <Route exact path="/terms-and-conditions">
         </Route>
         <Route exact path="/profile">
+          <HeaderSearch></HeaderSearch>
+          <Profile></Profile>
         </Route>
       </Switch>
     </Router>
