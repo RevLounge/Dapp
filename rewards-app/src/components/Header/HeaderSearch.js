@@ -29,7 +29,7 @@ export default class HeaderSearch extends Component {
             </Grid>
           </Container>
           <Container fluid textAlign="center">
-            <Search placeholder="Search for a Reviewer" size="massive"></Search>
+            <Search placeholder="Search for a Reviewer" size="large"></Search>
           </Container>
         </Segment>
       </div>
