@@ -2,9 +2,73 @@ import React, { Component } from 'react'
 import { Button, Form, Grid, Header, Image, Message, Segment } from 'semantic-ui-react'
 import {Link} from 'react-router-dom'
 import logo from '../../assets/logo-revlounge.png'
+import api from '../../api'
 
-export default class LoginForm extends Component {
+class LoginForm extends Component {
+
+    constructor(props){
+        super(props)    
+
+        this.state = {
+            name: '',
+            surname: '',
+            orcid:'',
+            account: '',
+            company: '',           
+            location: '', 
+            email: '',          
+        }//Si al final se añade la contraseña a la bd, añadir aqui un estado de password.
+    }
+
+    handleChangeInputName = async event => {
+        const name = event.target.value
+        this.setState({ name })
+    }
+    handleChangeInputSurname = async event => {
+        const surname = event.target.value
+        this.setState({ surname })
+    }    
+    handleChangeInputOrcid = async event => {
+        const orcid = event.target.value
+        this.setState({ orcid })
+    }
+    handleChangeInputAccount = async event => {
+        const account = event.target.value
+        this.setState({ account })
+    }
+    handleChangeInputCompany = async event => {
+        const company = event.target.value
+        this.setState({ company })
+    }
+    handleChangeInputLocation = async event => {
+        const location = event.target.value
+        this.setState({ location })
+    }
+    handleChangeInputEmail = async event => {
+        const email = event.target.value
+        this.setState({ email })
+    }
+    
+
+    handleIncludeReviewer = async () => {
+        const { name, surname, orcid, account, company, location, email } = this.state
+        const payload = { name, surname, orcid, account, company, location, email }
+        console.log(email)
+        await api.insertReviewer(payload).then(res => {
+            this.setState({
+                name: '',
+                surname: '',
+                orcid: '',
+                account: '',
+                company: '',
+                location: '',                
+                email: '',
+            })
+        })
+    }
+
     render() {
+        const { name, surname, orcid, account,  company, location, email} = this.state
         return (
             <Grid textAlign='center' style={{ height: '100vh' }} verticalAlign='middle'>
                 <Grid.Column style={{ maxWidth: 450 }}>
@@ -13,22 +77,27 @@ export default class LoginForm extends Component {
                         Register a new Reviewer
                     </Header>
                     <Form size='large'>
+
+                  
                         <Segment>
-                            <Form.Input fluid icon='user' iconPosition='left' placeholder='Name' />
-                            <Form.Input fluid icon='user' iconPosition='left' placeholder='Surname' />
-                            <Form.Input fluid icon='mail' iconPosition='left' placeholder='E-mail address' />
-                            <Form.Input fluid icon='map marker alternate' iconPosition='left' placeholder='Country' />
-                            <Form.Input fluid icon='ethereum' iconPosition='left' placeholder='Ethereum account' />
-                            <Form.Input fluid icon='id card' iconPosition='left' placeholder='ORCID ID' />
+                            <Form.Input fluid icon='user' name='name' value={name} iconPosition='left' placeholder='Name'  onChange={this.handleChangeInputName}/>
+                            <Form.Input fluid icon='user' name='surname' value={surname} iconPosition='left' placeholder='Surname'  onChange={this.handleChangeInputSurname}/>
+                            <Form.Input fluid icon='id card' iconPosition='left' name='orcid' value={orcid} placeholder='ORCID ID' onChange={this.handleChangeInputOrcid}/>
+                            <Form.Input fluid icon='ethereum' iconPosition='left' name='ethereum-account' value={account} placeholder='Ethereum account' onChange={this.handleChangeInputAccount}/>
+                            <Form.Input fluid icon='mail' name='company' value={company} iconPosition='left' placeholder='Company' onChange={this.handleChangeInputCompany}/>
+                            <Form.Input fluid icon='map marker alternate' value={location} name='location' iconPosition='left' placeholder='Location' onChange={this.handleChangeInputLocation}/>
+                            <Form.Input fluid icon='map marker alternate' value={email} name='email' iconPosition='left' placeholder='E-mail address' onChange={this.handleChangeInputEmail}/>
+                            
                             <Form.Input
                                 fluid
                                 icon='lock'
+                                name='password'
                                 iconPosition='left'
                                 placeholder='Password'
                                 type='password'
                             />
 
-                            <Button secondary fluid size='large'>
+                            <Button onClick={this.handleIncludeReviewer} secondary fluid size='large'>
                                 Register
                             </Button>
                         </Segment>
@@ -43,3 +112,5 @@ export default class LoginForm extends Component {
 
 
 }
+
+export default LoginForm
