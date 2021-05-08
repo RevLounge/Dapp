@@ -2,7 +2,7 @@
 import React from 'react'
 import { Button, Form, Grid, Icon, Popup, Image, Message, Segment, Input } from 'semantic-ui-react'
 import 'semantic-ui-css/semantic.min.css';
-import logo from './logo.png'
+import logo from '../assets/logo-revlounge.png'
 import Web3 from 'web3'
 
 
