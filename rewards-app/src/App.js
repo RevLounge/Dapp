@@ -9,6 +9,7 @@ import HeaderSearch from './components/Header/HeaderSearch';
 import TableReviewers from './components/Table/TableReviewers';
 import LoginForm from './components/LoginForm/LoginForm';
 import Profile from './components/Profile/Profile';
+import Import from './components/LoginForm/importReviews';
 
 function App() {
 
@@ -33,6 +34,9 @@ function App() {
             </div>
           )}
         >
+        </Route>
+        <Route exact path="/importReviews">
+          <Import></Import>
         </Route>
       </Switch>
     </Router>

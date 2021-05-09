@@ -1,14 +1,18 @@
 import React, { Component } from 'react'
 import { Button, Form, Grid, Header, Image, Message, Segment, Dimmer, Icon } from 'semantic-ui-react'
-import {Link} from 'react-router-dom'
+import {Link, Redirect} from 'react-router-dom'
 import logo from '../../assets/logo-revlounge.png'
 import api from '../../api'
+const { promisify } = require('util')
+
+
 
 class LoginForm extends Component {    
 
+    
     constructor(props){
         super(props)    
-
+        
         this.state = {
             name: '',
             surname: '',
@@ -17,12 +21,17 @@ class LoginForm extends Component {
             company: '',           
             location: '', 
             email: '',
+            reviewId: ''
         }//Si al final se añade la contraseña a la bd, añadir aqui un estado de password.
     }
 
     
+
     handleOpen = () => this.setState({ active: true })
-    handleClose = () => this.setState({ active: false })
+    handleClose = () => {
+        this.setState({ active: false })
+        window.location.href = '../'
+    }
 
     handleChangeInputName = async event => {
         const name = event.target.value
@@ -52,13 +61,20 @@ class LoginForm extends Component {
         const email = event.target.value
         this.setState({ email })
     }
+    handleChangeInputReviewId = async event => {
+        const reviewId = event.target.value
+        this.setState({ reviewId })
+    }
     
 
     handleIncludeReviewer = async () => {
-        const { name, surname, orcid, account, company, location, email } = this.state
-        const payload = { name, surname, orcid, account, company, location, email }
-        
+        const { name, surname, orcid, account, company, location, email, reviewId } = this.state
+        const payload = { name, surname, orcid, account, company, location, email, reviewId }
+        const sleep = promisify(setTimeout)
+          
+       
         await api.insertReviewer(payload).then(res => {
+           
             this.setState({
                 name: '',
                 surname: '',
@@ -67,16 +83,29 @@ class LoginForm extends Component {
                 company: '',
                 location: '',                
                 email: '',
+                reviewId: ''
+                
             })
+           
             this.handleOpen()
-        })
+            sleep(1).then(() => {
+                this.handleClose()
+              })
+              
+            
+           
+       })
+       //window.location.href = '/importReviews'
+       
     }
 
     
+    
+    
 
     render() {
-        const { name, surname, orcid, account,  company, location, email, active} = this.state
-        
+        const { name, surname, orcid, account,  company, location, email, active, reviewId} = this.state
+
         return (
            
             <Grid textAlign='center' style={{ height: '100vh' }} verticalAlign='middle'>
@@ -97,6 +126,7 @@ class LoginForm extends Component {
                             <Form.Input fluid icon='archive' name='company' value={company} iconPosition='left' placeholder='Company' onChange={this.handleChangeInputCompany}/>
                             <Form.Input fluid icon='map marker alternate' value={location} name='location' iconPosition='left' placeholder='Location' onChange={this.handleChangeInputLocation}/>
                             <Form.Input fluid icon='mail' value={email} name='email' iconPosition='left' placeholder='E-mail address' onChange={this.handleChangeInputEmail}/>
+                            <Form.Input fluid icon='mail' value={reviewId} name='reviewId' iconPosition='left' placeholder='reviewId' onChange={this.handleChangeInputReviewId}/>
                             
                             <Form.Input
                                 fluid
@@ -120,8 +150,9 @@ class LoginForm extends Component {
                     <Dimmer active={active} onClickOutside={this.handleClose} page>
                         <Header as='h2' icon inverted>
                             <Icon name='handshake outline' />
-                            Successfully registered!
+                            Everything Worked Out!
                         </Header>
+                        <Header.Subheader>Press anywhere to go back to Home Page</Header.Subheader>
                     </Dimmer>
                 </Grid.Column>
             </Grid>

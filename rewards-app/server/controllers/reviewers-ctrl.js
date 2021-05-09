@@ -22,9 +22,10 @@ createReviewer = (req, res) => {
     reviewer.company = body.company
     reviewer.location = body.location
     reviewer.email = body.email
+    
     reviewer.reviews =        {
         //"_id": 0, -> Finalmente id aleatoria para recoger posicion del array
-        "reviewId": "https://publons.com/review/author/q5aJLTUh/", //Cambiar por URL -> faker.git.shortSha()
+        "reviewId": body.reviewId, //Cambiar por URL -> faker.git.shortSha()
         "title": faker.lorem.sentence(),
         "description" : faker.lorem.paragraph()
     }
