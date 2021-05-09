@@ -4,9 +4,34 @@ import { Button, Form, Grid, Icon, Popup, Image, Message, Segment, Input } from 
 import 'semantic-ui-css/semantic.min.css';
 import logo from '../assets/logo-revlounge.png'
 import Web3 from 'web3'
+import Identicon from 'identicon.js'
 
+const ipfsClient = require('ipfs-http-client')
+const ipfs = ipfsClient({host: 'ipfs.infura.io', port: 5001, protocol: 'http'})
 
-const Rewards = ({ tipReviewer, sayThanks, from, to }) => {
+function createHash(from,to,type,idreview){
+    let award = from;
+    award = award.concat('0x12938213812');
+    award = award.concat('0x021893128389');
+    award = award.concat('0');
+    award = award.concat('http://wokdwo.com/idjawji')
+    return award;
+}
+
+// https://ipfs.infura.io/ipfs/
+function uploadIPFS(award){
+    var buf = Buffer.from(award, 'utf-8');
+    console.log(buf)
+    ipfs.add(buf, (error, result) => {
+        console.log('Ipfs result',result)
+        if(error){
+            console.error(error)
+            return
+        }
+    })
+}
+
+const Rewards = ({ tipReviewer, sayThanks, from, to, reviewid, type }) => {
     const inputRef = React.createRef();
     var amount = 0;
     return (
@@ -58,8 +83,22 @@ const Rewards = ({ tipReviewer, sayThanks, from, to }) => {
                                 <Grid divided columns='equal'>
                                     <Grid.Column>
                                         <Popup
-                                            trigger={<Button color='yellow' content='Gold' fluid />}
-                                            content='This is the best reward a reviewer can receive. It is golden as the Golden Snitch.'
+                                            trigger={
+                                                <Button color='yellow' content='Gold' fluid
+                                                onClick={() => {
+                                                    var award = createHash(from,to, type, reviewid);
+                                                    let options = {
+                                                        background: [255, 215, 0, 255],         // rgba white
+                                                        margin: 0.2,                              // 20% margin
+                                                        size: 30,                                // 420px square
+                                                        format: 'png'                             // use SVG instead of PNG
+                                                    };
+                                                    var identicon = "data:image/png;base64,"
+                                                    identicon = identicon.concat(new Identicon(award,options).toString())
+                                                    uploadIPFS(identicon)
+                                                }} />
+                                            }
+                                            content='Give a GOLD award to the reviewer.'
                                             position='top center'
                                             size='tiny'
                                             inverted
@@ -67,8 +106,20 @@ const Rewards = ({ tipReviewer, sayThanks, from, to }) => {
                                     </Grid.Column>
                                     <Grid.Column>
                                         <Popup
-                                            trigger={<Button color='grey' content='Silver' fluid />}
-                                            content='This award wont go surfing but it is also really cool.'
+                                            trigger={<Button color='grey' content='Silver' fluid 
+                                            onClick={() => {
+                                                var award = createHash(from,to, type, reviewid);
+                                                let options = {
+                                                    background: [192, 192, 192, 255],         // rgba silver
+                                                    margin: 0.2,                              // 20% margin
+                                                    size: 30,                                // 420px square
+                                                    format: 'png'                             // use SVG instead of PNG
+                                                  };
+                                                //var identicon = "data:image/png;base64, identicon.concat("
+                                                var identicon = new Identicon(award,options).toString()
+                                                uploadIPFS(identicon)
+                                            }} />}
+                                            content='Give a SILVER award to the reviewer.'
                                             position='top center'
                                             size='tiny'
                                             inverted
@@ -76,17 +127,20 @@ const Rewards = ({ tipReviewer, sayThanks, from, to }) => {
                                     </Grid.Column>
                                     <Grid.Column>
                                         <Popup
-                                            trigger={<Button color='brown' content='Bronce' fluid />}
-                                            content='This award does not shine like gold or silver but still makes people happy.'
-                                            position='top center'
-                                            size='tiny'
-                                            inverted
-                                        />
-                                    </Grid.Column>
-                                    <Grid.Column>
-                                        <Popup
-                                            trigger={<Button color='purple' content='Fancy' fluid />}
-                                            content='If you were a reviewer, I would give you this NFT Reward!'
+                                            trigger={<Button color='brown' content='Bronce' fluid 
+                                            onClick={() => {
+                                                var award = createHash(from,to, type, reviewid);
+                                                let options = {
+                                                    background: [205, 127, 50, 255],         // rgba bronce
+                                                    margin: 0.2,                              // 20% margin
+                                                    size: 30,                                // 420px square
+                                                    format: 'png'                             // use SVG instead of PNG
+                                                  };
+                                                var identicon = "data:image/png;base64,"
+                                                identicon = identicon.concat(new Identicon(award,options).toString())
+                                                uploadIPFS(identicon);
+                                            }} />}
+                                            content='Give a BRONCE award to the reviewer.'
                                             position='top center'
                                             size='tiny'
                                             inverted
