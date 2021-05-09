@@ -20,6 +20,7 @@
     "react-scripts": "4.0.3",
     "semantic-ui-css": "^2.4.1",
     "semantic-ui-react": "^2.0.3",
+    "string-to-color": "^2.2.2",
     "web-vitals": "^1.0.1"
   },
   "scripts": {

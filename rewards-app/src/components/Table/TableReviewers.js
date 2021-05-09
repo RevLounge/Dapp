@@ -5,6 +5,7 @@ import avatar from './matthew.png'
 import avatar2 from './daniel.jpg'
 import { Link } from 'react-router-dom'
 import api from '../../api'
+const stc = require('string-to-color');
 
 
 
@@ -40,6 +41,7 @@ export default class HeaderSearch extends Component {
                     </Table.Header>
                     <Table.Body>
                         {reviewers.map((reviewer, key) => {
+                            {var color= stc(reviewer.account)}
                             return(
                             <Table.Row key = {key}>
                                 <Table.Cell textAlign="left">
@@ -47,7 +49,7 @@ export default class HeaderSearch extends Component {
                                         <Image
                                             avatar
                                             spaced='right'
-                                            src={`https://eu.ui-avatars.com/api/?name=${reviewer.name}+${reviewer.surname}+&size=512&background=random`}
+                                            src={`https://eu.ui-avatars.com/api/?name=${reviewer.name}+${reviewer.surname}+&size=512&background=${color.substring(1)}`}
                                         />
                                         <Header.Content as={Link} to={`/reviewer/${reviewer._id}`}>{reviewer.name} {reviewer.surname}</Header.Content>
                                     </Header>

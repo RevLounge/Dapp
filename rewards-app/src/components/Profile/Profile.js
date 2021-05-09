@@ -3,6 +3,7 @@ import { Card, Grid, Statistic, Label, Header, List, Image, GridColumn, Containe
 import avatar from '../../assets/daniel.jpg'
 import api from '../../api'
 import './Profile.css'
+const stc = require('string-to-color');
 
 
 export default class Profile extends Component {
@@ -41,6 +42,7 @@ export default class Profile extends Component {
 
     render() {
         const { name, surname, summary, orcid, account, company, location, email, reviews } = this.state
+        var color= stc(account)
         return (
             <div>
                 <p></p>
@@ -50,7 +52,7 @@ export default class Profile extends Component {
                         <Grid.Column width={2} floated='right'>
                             {/*EMPIEZA CARD*/}
                             <Card>
-                                <Image src={`https://eu.ui-avatars.com/api/?name=${name}+${surname}+&size=512&background=random`} wrapped ui={false} />
+                                <Image src={`https://eu.ui-avatars.com/api/?name=${name}+${surname}+&size=512&background=${color.substring(1)}`} wrapped ui={false} />
                                 <Card.Content>
                                     <Card.Description textAlign='center' extra>
                                         <Statistic size='small' horizontal>
