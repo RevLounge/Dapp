@@ -50,7 +50,7 @@ export default class Profile extends Component {
                         <Grid.Column width={2} floated='right'>
                             {/*EMPIEZA CARD*/}
                             <Card>
-                                <Image src={`https://eu.ui-avatars.com/api/?name=${name}+${surname}`} wrapped ui={false} />
+                                <Image src={`https://eu.ui-avatars.com/api/?name=${name}+${surname}+&size=512&background=random`} wrapped ui={false} />
                                 <Card.Content>
                                     <Card.Description textAlign='center' extra>
                                         <Statistic size='small' horizontal>

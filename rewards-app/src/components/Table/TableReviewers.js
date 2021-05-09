@@ -47,7 +47,7 @@ export default class HeaderSearch extends Component {
                                         <Image
                                             avatar
                                             spaced='right'
-                                            src={`https://eu.ui-avatars.com/api/?name=${reviewer.name}+${reviewer.surname}`}
+                                            src={`https://eu.ui-avatars.com/api/?name=${reviewer.name}+${reviewer.surname}+&size=512&background=random`}
                                         />
                                         <Header.Content as={Link} to={`/reviewer/${reviewer._id}`}>{reviewer.name} {reviewer.surname}</Header.Content>
                                     </Header>
