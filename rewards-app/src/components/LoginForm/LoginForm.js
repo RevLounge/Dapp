@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
-import { Button, Form, Grid, Header, Image, Message, Segment } from 'semantic-ui-react'
+import { Button, Form, Grid, Header, Image, Message, Segment, Dimmer, Icon } from 'semantic-ui-react'
 import {Link} from 'react-router-dom'
 import logo from '../../assets/logo-revlounge.png'
 import api from '../../api'
 
-class LoginForm extends Component {
+class LoginForm extends Component {    
 
     constructor(props){
         super(props)    
@@ -16,9 +16,13 @@ class LoginForm extends Component {
             account: '',
             company: '',           
             location: '', 
-            email: '',          
+            email: '',
         }//Si al final se añade la contraseña a la bd, añadir aqui un estado de password.
     }
+
+    
+    handleOpen = () => this.setState({ active: true })
+    handleClose = () => this.setState({ active: false })
 
     handleChangeInputName = async event => {
         const name = event.target.value
@@ -53,7 +57,7 @@ class LoginForm extends Component {
     handleIncludeReviewer = async () => {
         const { name, surname, orcid, account, company, location, email } = this.state
         const payload = { name, surname, orcid, account, company, location, email }
-        console.log(email)
+        
         await api.insertReviewer(payload).then(res => {
             this.setState({
                 name: '',
@@ -64,13 +68,19 @@ class LoginForm extends Component {
                 location: '',                
                 email: '',
             })
+            this.handleOpen()
         })
     }
 
+    
+
     render() {
-        const { name, surname, orcid, account,  company, location, email} = this.state
+        const { name, surname, orcid, account,  company, location, email, active} = this.state
+        
         return (
+           
             <Grid textAlign='center' style={{ height: '100vh' }} verticalAlign='middle'>
+                
                 <Grid.Column style={{ maxWidth: 450 }}>
                     <Image as={Link} to='/' src={logo} centered size="medium"></Image>
                     <Header as='h2' color="black" textAlign='center' >
@@ -84,9 +94,9 @@ class LoginForm extends Component {
                             <Form.Input fluid icon='user' name='surname' value={surname} iconPosition='left' placeholder='Surname'  onChange={this.handleChangeInputSurname}/>
                             <Form.Input fluid icon='id card' iconPosition='left' name='orcid' value={orcid} placeholder='ORCID ID' onChange={this.handleChangeInputOrcid}/>
                             <Form.Input fluid icon='ethereum' iconPosition='left' name='ethereum-account' value={account} placeholder='Ethereum account' onChange={this.handleChangeInputAccount}/>
-                            <Form.Input fluid icon='mail' name='company' value={company} iconPosition='left' placeholder='Company' onChange={this.handleChangeInputCompany}/>
+                            <Form.Input fluid icon='archive' name='company' value={company} iconPosition='left' placeholder='Company' onChange={this.handleChangeInputCompany}/>
                             <Form.Input fluid icon='map marker alternate' value={location} name='location' iconPosition='left' placeholder='Location' onChange={this.handleChangeInputLocation}/>
-                            <Form.Input fluid icon='map marker alternate' value={email} name='email' iconPosition='left' placeholder='E-mail address' onChange={this.handleChangeInputEmail}/>
+                            <Form.Input fluid icon='mail' value={email} name='email' iconPosition='left' placeholder='E-mail address' onChange={this.handleChangeInputEmail}/>
                             
                             <Form.Input
                                 fluid
@@ -96,21 +106,27 @@ class LoginForm extends Component {
                                 placeholder='Password'
                                 type='password'
                             />
-
-                            <Button onClick={this.handleIncludeReviewer} secondary fluid size='large'>
+                            
+                            <Button onClick={this.handleIncludeReviewer}secondary fluid size='large'>
                                 Register
                             </Button>
+                           
                         </Segment>
                     </Form>
+                    
                     <Message>
                         New to us? <a href='https://github.com/carlosrodrih/Rewards'>Get info</a>
                     </Message>
+                    <Dimmer active={active} onClickOutside={this.handleClose} page>
+                        <Header as='h2' icon inverted>
+                            <Icon name='handshake outline' />
+                            Successfully registered!
+                        </Header>
+                    </Dimmer>
                 </Grid.Column>
             </Grid>
         )
     }
-
-
 }
 
 export default LoginForm
