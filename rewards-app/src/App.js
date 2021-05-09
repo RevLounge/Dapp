@@ -24,9 +24,15 @@ function App() {
         </Route>
         <Route exact path="/terms-and-conditions">
         </Route>
-        <Route exact path="/profile">
-          <HeaderSearch></HeaderSearch>
-          <Profile></Profile>
+        <Route exact
+          path="/reviewer/:id"
+          render={(props) => (
+            <div>
+              <HeaderSearch></HeaderSearch>
+              <Profile {...props.match.params}/>
+            </div>
+          )}
+        >
         </Route>
       </Switch>
     </Router>

@@ -1,120 +1,140 @@
 import React, { Component } from 'react'
 import { Card, Grid, Statistic, Label, Header, List, Image, GridColumn, Container, Divider, Segment } from 'semantic-ui-react'
 import avatar from '../../assets/daniel.jpg'
+import api from '../../api'
 import './Profile.css'
-
-const extra = (
-    <a>
-        <Header as='h5' textAlign='center'>
-            <Label color='yellow'>
-                1
-            </Label>
-            <Label color='grey'>
-                9
-            </Label>
-            <Label color='brown'>
-                18
-            </Label>
-        </Header>
-    </a>
-)
-
-const card = (
-    <Card>
-        <Image src={avatar} wrapped ui={false} />
-        <Card.Content>
-            <Card.Description textAlign='center' extra>
-                <Statistic size='small' horizontal>
-                    <Statistic.Value>309</Statistic.Value>
-                    <Statistic.Label>Reputation</Statistic.Label>
-                </Statistic>
-            </Card.Description>
-        </Card.Content>
-        <Card.Content extra>
-            {extra}
-        </Card.Content>
-    </Card>
-)
 
 
 export default class Profile extends Component {
 
+    constructor(props) {
+        super(props)
+        this.state = {
+            name: '',
+            surname: '',
+            summary: '',
+            orcid: '',
+            account: '',
+            company: '',
+            location: '',
+            email: '',
+            reviews: [],
+        }
+    }
+
+    componentDidMount = async () => {
+        await api.getReviewerById(this.props.id).then(reviewer => {
+            this.setState({
+                name: reviewer.data.data.name,
+                surname: reviewer.data.data.surname,
+                summary: reviewer.data.data.summary,
+                orcid: reviewer.data.data.orcid,
+                account: reviewer.data.data.account,
+                company: reviewer.data.data.company,
+                location: reviewer.data.data.location,
+                email: reviewer.data.data.email,
+                reviews: reviewer.data.data.reviews,
+            })
+        })
+    }
+
+
     render() {
+        const { name, surname, summary, orcid, account, company, location, email, reviews } = this.state
         return (
             <div>
                 <p></p>
                 <Grid centered>
                     <Grid.Row columns={5}>
-                        <Grid.Column width={4}></Grid.Column>
+                        <Grid.Column width={3}></Grid.Column>
                         <Grid.Column width={2} floated='right'>
-                            {card}
+                            {/*EMPIEZA CARD*/}
+                            <Card>
+                                <Image src={`https://eu.ui-avatars.com/api/?name=${name}+${surname}`} wrapped ui={false} />
+                                <Card.Content>
+                                    <Card.Description textAlign='center' extra>
+                                        <Statistic size='small' horizontal>
+                                            <Statistic.Value>309</Statistic.Value>
+                                            <Statistic.Label>Reputation</Statistic.Label>
+                                        </Statistic>
+                                    </Card.Description>
+                                </Card.Content>
+                                <Card.Content extra>
+                                    {/*EMPIEZA EXTRA*/}
+                                    <a>
+                                    <Header as='h5' textAlign='center'>
+                                        <Label color='yellow'>
+                                            1
+                                        </Label>
+                                        <Label color='grey'>
+                                            9
+                                        </Label>
+                                        <Label color='brown'>
+                                            18
+                                        </Label>
+                                    </Header>
+                                    </a>
+                                    {/*TERMINA EXTRA*/}
+                                </Card.Content>
+                            </Card>
+                        {/*TERMINA CARD*/}
+
                         </Grid.Column>
-                        <Grid.Column width={3} floated='left'>
+                        <Grid.Column width={4} floated='left'>
                             <Container fluid textAlign='justified'>
-                                <Header as='h2'>Luis Vázquez Eminencia</Header>
+                                <Header as='h2'>{name} {surname}</Header>
+                                <Header as='h5'>Cuenta: {account}</Header>
+                                 
                                 <p>
-                                    Domestic dogs inherited complex behaviors, such as bite inhibition, from
-                                    their wolf ancestors, which would have been pack hunters with complex
-                                    body language. These sophisticated forms of social cognition and
-                                    communication may account for their trainability, playfulness, and
-                                    ability to fit into human households and social situations, and these
-                                    attributes have given dogs a relationship with humans that has enabled
-                                    them to become one of the most successful species on the planet today.
+                                    {summary}
                                 </p>
                             </Container>
                         </Grid.Column>
-                        <Grid.Column width={2} floated='right'>
+                        <Grid.Column width={3} floated='right'>
                             <Segment stacked fluid>
                                 <List>
-                                    <List.Item icon='users' content='Universidad Complutense de Madrid' />
-                                    <List.Item icon='marker' content='Madrid, Spain' />
+                                    <List.Item icon='users' content={company} />
+                                    <List.Item icon='marker' content={location} />
                                     <List.Item
                                         icon='mail'
-                                        content={<a href='mailto:lvazquez@ucm.es'>lvazquez@minencia.es</a>}
+                                        content={<a href={`mailto:${email}`}>{email}</a>}
                                     />
                                     <List.Item
                                         icon='linkify'
-                                        content={<a href='http://www.semantic-ui.com'>luisvazquez.io</a>}
+                                        content={`Orcid: ${orcid}`}
                                     />
                                 </List>
 
                             </Segment>
                         </Grid.Column>
-                        <Grid.Column width={4} />
+                        <Grid.Column width={3} />
                     </Grid.Row>
                     <Grid.Row columns={3}>
-                        <GridColumn width={4} />
-                        <GridColumn width={8}>
-                            <Header as='h2' floated='left'>Reviews (3)</Header>
+                        <GridColumn width={3 } />
+                        <GridColumn width={9}>
+                            <Header as='h2' floated='left'>Reviews ({reviews.length})</Header>
                             <Divider clearing />
                             <Segment>
                                 <List divided relaxed>
-                                    <List.Item>
-                                        <List.Content>
-                                            <List.Header>Snickerdoodle</List.Header>
-                                            An excellent companion
-                                        </List.Content>
-                                    </List.Item>
-                                    <List.Item>
-                                        <List.Content>
-                                            <List.Header>Poodle</List.Header>
-                                            A poodle, its pretty basic
-                                        </List.Content>
-                                    </List.Item>
-                                    <List.Item>
-                                        <List.Content>
-                                            <List.Header>Paulo</List.Header>
-                                            He's also a dog
-                                        </List.Content>
-                                    </List.Item>
+                                    {reviews.map((review) => {
+                                        return (
+                                            <List.Item>
+                                                <List.Content>
+                                                    <List.Header><a href={review.reviewId}>{review.title}</a></List.Header>
+                                                    {review.description}
+                                                </List.Content>
+                                            </List.Item>
+                                        )
+                                    })}
                                 </List>
                             </Segment>
                         </GridColumn>
-                        <Grid.Column width={4} />
+                        <Grid.Column width={3} />
                     </Grid.Row>
+
                     <Grid.Row columns={3}>
-                        <GridColumn width={4} />
-                        <GridColumn width={8}>
+                        <GridColumn width={3} />
+                        <GridColumn width={9}>
                             <Header as='h2' floated='left'>Rewards (28)</Header>
                             <Divider clearing />
                             <Grid>
@@ -131,7 +151,7 @@ export default class Profile extends Component {
                                 </Grid.Row>
                             </Grid>
                         </GridColumn>
-                        <Grid.Column width={4} />
+                        <Grid.Column width={3} />
                     </Grid.Row>
                 </Grid>
             </div>

@@ -49,7 +49,7 @@ export default class HeaderSearch extends Component {
                                             spaced='right'
                                             src={`https://eu.ui-avatars.com/api/?name=${reviewer.name}+${reviewer.surname}`}
                                         />
-                                        <Header.Content>{reviewer.name} {reviewer.surname}</Header.Content>
+                                        <Header.Content as={Link} to={`/reviewer/${reviewer._id}`}>{reviewer.name} {reviewer.surname}</Header.Content>
                                     </Header>
                                 </Table.Cell>
                                 <Table.Cell textAlign='center' >
