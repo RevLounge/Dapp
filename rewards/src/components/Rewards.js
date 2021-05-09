@@ -7,9 +7,9 @@ import Web3 from 'web3'
 import Identicon from 'identicon.js'
 
 const ipfsClient = require('ipfs-http-client')
-const ipfs = ipfsClient({host: 'ipfs.infura.io', port: 5001, protocol: 'http'})
+const ipfs = ipfsClient({ host: 'ipfs.infura.io', port: 5001, protocol: 'http' })
 
-function createHash(from,to,type,idreview){
+function createHash(from, to, type, idreview) {
     let award = from;
     award = award.concat('0x12938213812');
     award = award.concat('0x021893128389');
@@ -18,13 +18,13 @@ function createHash(from,to,type,idreview){
     return award;
 }
 
-// https://ipfs.infura.io/ipfs/
-function uploadIPFS(award){
-    var buf = Buffer.from(award, 'utf-8');
+// https://ipfs.infura.io/ipfs/"
+function uploadIPFS(award) {
+    var buf = Buffer.from(award, 'base64');
     console.log(buf)
     ipfs.add(buf, (error, result) => {
-        console.log('Ipfs result',result)
-        if(error){
+        console.log('Ipfs result', result)
+        if (error) {
             console.error(error)
             return
         }
@@ -52,9 +52,9 @@ const Rewards = ({ tipReviewer, sayThanks, from, to, reviewid, type }) => {
                                     <Icon name='ethereum' />
                                 </Button.Content></Button>} on='click'>
                                 <Input>
-                                    <input type='text' ref={inputRef} placeholder='Ether amount...' onChange={()=>{
+                                    <input type='text' ref={inputRef} placeholder='Ether amount...' onChange={() => {
                                         amount = inputRef.current.value
-                                    }}/>
+                                    }} />
                                     <Button type='submit' onClick={() => {
                                         let tip = Web3.utils.toWei(amount.toString(), "ether");
                                         console.log(tip);
@@ -85,18 +85,17 @@ const Rewards = ({ tipReviewer, sayThanks, from, to, reviewid, type }) => {
                                         <Popup
                                             trigger={
                                                 <Button color='yellow' content='Gold' fluid
-                                                onClick={() => {
-                                                    var award = createHash(from,to, type, reviewid);
-                                                    let options = {
-                                                        background: [255, 215, 0, 255],         // rgba white
-                                                        margin: 0.2,                              // 20% margin
-                                                        size: 30,                                // 420px square
-                                                        format: 'png'                             // use SVG instead of PNG
-                                                    };
-                                                    var identicon = "data:image/png;base64,"
-                                                    identicon = identicon.concat(new Identicon(award,options).toString())
-                                                    uploadIPFS(identicon)
-                                                }} />
+                                                    onClick={() => {
+                                                        var award = createHash(from, to, type, reviewid);
+                                                        let options = {
+                                                            background: [255, 215, 0, 255],         // rgba white
+                                                            margin: 0.2,                              // 20% margin
+                                                            size: 30,                                // 420px square
+                                                            format: 'png'                             // use SVG instead of PNG
+                                                        };
+                                                        var identicon = new Identicon(award, options).toString()
+                                                        uploadIPFS(identicon)
+                                                    }} />
                                             }
                                             content='Give a GOLD award to the reviewer.'
                                             position='top center'
@@ -106,19 +105,18 @@ const Rewards = ({ tipReviewer, sayThanks, from, to, reviewid, type }) => {
                                     </Grid.Column>
                                     <Grid.Column>
                                         <Popup
-                                            trigger={<Button color='grey' content='Silver' fluid 
-                                            onClick={() => {
-                                                var award = createHash(from,to, type, reviewid);
-                                                let options = {
-                                                    background: [192, 192, 192, 255],         // rgba silver
-                                                    margin: 0.2,                              // 20% margin
-                                                    size: 30,                                // 420px square
-                                                    format: 'png'                             // use SVG instead of PNG
-                                                  };
-                                                //var identicon = "data:image/png;base64, identicon.concat("
-                                                var identicon = new Identicon(award,options).toString()
-                                                uploadIPFS(identicon)
-                                            }} />}
+                                            trigger={<Button color='grey' content='Silver' fluid
+                                                onClick={() => {
+                                                    var award = createHash(from, to, type, reviewid);
+                                                    let options = {
+                                                        background: [192, 192, 192, 255],         // rgba silver
+                                                        margin: 0.2,                              // 20% margin
+                                                        size: 30,                                // 420px square
+                                                        format: 'png'                             // use SVG instead of PNG
+                                                    };
+                                                    var identicon = new Identicon(award, options).toString()
+                                                    uploadIPFS(identicon)
+                                                }} />}
                                             content='Give a SILVER award to the reviewer.'
                                             position='top center'
                                             size='tiny'
@@ -127,19 +125,18 @@ const Rewards = ({ tipReviewer, sayThanks, from, to, reviewid, type }) => {
                                     </Grid.Column>
                                     <Grid.Column>
                                         <Popup
-                                            trigger={<Button color='brown' content='Bronce' fluid 
-                                            onClick={() => {
-                                                var award = createHash(from,to, type, reviewid);
-                                                let options = {
-                                                    background: [205, 127, 50, 255],         // rgba bronce
-                                                    margin: 0.2,                              // 20% margin
-                                                    size: 30,                                // 420px square
-                                                    format: 'png'                             // use SVG instead of PNG
-                                                  };
-                                                var identicon = "data:image/png;base64,"
-                                                identicon = identicon.concat(new Identicon(award,options).toString())
-                                                uploadIPFS(identicon);
-                                            }} />}
+                                            trigger={<Button color='brown' content='Bronce' fluid
+                                                onClick={() => {
+                                                    var award = createHash(from, to, type, reviewid);
+                                                    let options = {
+                                                        background: [205, 127, 50, 255],         // rgba bronce
+                                                        margin: 0.2,                              // 20% margin
+                                                        size: 30,                                // 420px square
+                                                        format: 'png'                             // use SVG instead of PNG
+                                                    };
+                                                    var identicon = new Identicon(award, options).toString()
+                                                    uploadIPFS(identicon)
+                                                }} />}
                                             content='Give a BRONCE award to the reviewer.'
                                             position='top center'
                                             size='tiny'
