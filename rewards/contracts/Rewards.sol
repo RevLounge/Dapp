@@ -38,6 +38,7 @@ contract Rewards {
     mapping(address => bool) public reviewerExists;
     address[] public reviewers;
     mapping(address => string []) awards;
+    mapping(string => address) reviews;
 
     event PaperCreated(
         uint id,
@@ -94,6 +95,8 @@ contract Rewards {
     function addReviewer(uint _id, address payable _reviewer, string memory review) public {
         require(_id < papers.length);
         require(_reviewer != papers[_id].author);
+        require(reviews[review]=="");
+        reviews[review] = _reviewer;
         papers[_id].reviewers.push(_reviewer);
         papers[_id].reviews[_reviewer] = review;
         
@@ -174,6 +177,10 @@ contract Rewards {
     function getPaperReviewsByReviewer(uint _id, address _reviewer) public view returns (string memory){
         require(getPaperReviewerCount(_id) > 0);
         return papers[_id].reviews[_reviewer];
+    }
+
+    function getReviewerByReview(string memory reviewId) public view returns (address [] memory){
+        return reviews[reviewId];
     }
 
     function getPaperCount() public view returns (uint256) {
