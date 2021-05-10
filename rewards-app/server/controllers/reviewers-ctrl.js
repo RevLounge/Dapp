@@ -180,6 +180,36 @@ getReviewers = async (req, res) => {
     }).catch(err => console.log(err))
 }
 
+getReviewerByReviewId = async (req, res) => {
+    await Reviewer.findOne({ 'reviews.reviewId': req.params.id }, {'reviews.$': 1}, (err, reviewer) => {
+        if (err) {
+            return res.status(400).json({ success: false, error: err })
+        }
+
+        if (!reviewer) {
+            return res
+                .status(404)
+                .json({ success: false, error: `Review not found` })
+        }
+        return res.status(200).json({ success: true, data: reviewer })
+    }).catch(err => console.log(err))
+}
+
+getReviewerByAccount = async (req, res) => {
+    await Reviewer.findOne({ account: req.params.id }, (err, reviewer) => {
+        if (err) {
+            return res.status(400).json({ success: false, error: err })
+        }
+
+        if (!reviewer) {
+            return res
+                .status(404)
+                .json({ success: false, error: `Account not found` })
+        }
+        return res.status(200).json({ success: true, data: reviewer })
+    }).catch(err => console.log(err))
+}
+
 module.exports = {
     createReviewer,
     addRandomReviewtoReviewer,
@@ -187,4 +217,6 @@ module.exports = {
     deleteReviewer,
     getReviewers,
     getReviewerById,
+    getReviewerByReviewId,
+    getReviewerByAccount,
 }

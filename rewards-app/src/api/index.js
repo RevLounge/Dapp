@@ -10,6 +10,8 @@ export const addRandomReviewtoReviewer = (id, payload) => api.put(`/reviewer/${i
 export const updateReviewer = (id, payload) => api.patch(`/reviewer/${id}`, payload)
 export const deleteReviewerById = id => api.delete(`/reviewer/${id}`)
 export const getReviewerById = id => api.get(`/reviewer/${id}`)
+export const getReviewerByReviewId = id => api.get(`/reviewId/${id}`)
+export const getReviewerByAccount = id => api.get(`/reviewAccount/${id}`)
 
 const apis = {
     insertReviewer,
@@ -18,6 +20,8 @@ const apis = {
     updateReviewer,
     deleteReviewerById,
     getReviewerById,
+    getReviewerByReviewId,
+    getReviewerByAccount,
 }
 
 export default apis

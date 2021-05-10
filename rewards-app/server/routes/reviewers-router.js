@@ -10,5 +10,7 @@ router.patch('/reviewer/:id', ReviewersCtrl.updateReviewer)
 router.delete('/reviewer/:id', ReviewersCtrl.deleteReviewer)
 router.get('/reviewer/:id', ReviewersCtrl.getReviewerById)
 router.get('/reviewers', ReviewersCtrl.getReviewers)
+router.get('/reviewId/:id', ReviewersCtrl.getReviewerByReviewId)
+router.get('/reviewAccount/:id', ReviewersCtrl.getReviewerByAccount)
 
 module.exports = router
