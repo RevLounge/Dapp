@@ -60,11 +60,12 @@ class App extends Component {
       from: null,
       to: null,
       account: null,
-      review: null
+      review_id: null
     }
 
     this.sayThanks = this.sayThanks.bind(this);
     this.tipReviewer = this.tipReviewer.bind(this);
+    this.giveAward = this.giveAward.bind(this);
     this.setSubmission = this.setSubmission.bind(this);
   };
 
@@ -82,7 +83,6 @@ class App extends Component {
       .tipReviewer(id, account)
       .send({ from: this.state.account, value: amount })
       .once("receipt", (receipt) => {
-        this.setState({ ready: false });
         this.setSuccess(true)
         this.setSubmission(true)
       });
@@ -98,22 +98,33 @@ class App extends Component {
       })
   }
 
+  giveAward(award_id, award_hash) {
+    console.log(award_hash)
+    this.state.contract.methods
+    .giveAward(0, this.state.to, award_id, award_hash, this.state.review_id)
+    .send({ from: this.state.account })
+    .once("receipt", (receipt) => {
+      this.setSuccess(true)
+      this.setSubmission(true)
+    })
+  }
+
   getUrlInfo() {
     let url_string = window.location.href
     let url = new URL(url_string);
-    let _from = url.searchParams.get("from");
+    let _from = this.state.account;
     let _to = url.searchParams.get("to");
     let _review = url.searchParams.get("rev");
 
 
-    this.setState({ from: _from, to: _to, review: _review })
+    this.setState({ from: _from, to: _to, review_id: _review })
   }
 
   render() {
     return (
       <div>
         {!this.state.isSubmitted ? (
-          <Rewards tipReviewer={this.tipReviewer} sayThanks={this.sayThanks} from={this.state.account} to={this.state.to} />
+          <Rewards tipReviewer={this.tipReviewer} sayThanks={this.sayThanks} giveAward={this.giveAward} from={this.state.account} to={this.state.to} reviewid={this.state.review_id}/>
         ) : (
           <RewardsSuccess isSuccess={this.state.isSuccess} setSubmission={this.setSubmission} />
         )}

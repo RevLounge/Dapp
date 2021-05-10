@@ -17,10 +17,12 @@ contract Rewards {
     }
 
     struct Award {
-        uint id;
+        uint id;//Id de la revision
         address reviewer;
         address sender;
         uint awardId;
+        string hashIPFS;
+        string reviewId;
     }
 
     struct Paper {
@@ -75,7 +77,9 @@ contract Rewards {
         uint id,
         address payable reviewer,
         address user,
-        uint awardId
+        uint awardId,
+        string hashIPFS,
+        string reviewId
     );
 
     function createPaper(string memory _title) public {
@@ -134,24 +138,23 @@ contract Rewards {
     function getReputation(address _reviewer) public view returns (uint256) {
         return reputationtoken.balanceOf(_reviewer);
     }
-
-    function giveAward(uint _id, address payable _reviewer, uint _awardId ) public payable{
+    function giveAward(uint _id, address payable _reviewer, uint _awardId, string memory hashIPFS, string memory reviewId ) public payable{
         require(_id < papers.length);
-        require(_awardId < 4);
+        require(_awardId < 3);
         require(bytes(papers[_id].reviews[_reviewer]).length != 0);
-        string memory _hash = string(abi.encode(_id, _reviewer, msg.sender, _awardId));
+        string memory _hash = string(abi.encode(_id, _reviewer, msg.sender, _awardId, hashIPFS, reviewId));
         require(!hasGivenAward[_hash]);
         awardsToken.mint(_reviewer, _hash);
         awards[_reviewer].push(_hash);
 
-        emit AwardGiven(_id,  _reviewer, msg.sender, _awardId);
+        emit AwardGiven(_id,  _reviewer, msg.sender, _awardId, hashIPFS, reviewId);
     }
 
     function getAward(address _reviewer, uint _id) public view returns (Award memory){
         string [] storage hashes = awards[_reviewer];
         string memory _hash = hashes[_id];
         Award memory a;
-        (a.id, a.reviewer, a.sender, a.awardId) = (abi.decode(bytes(_hash), (uint , address, address, uint)));
+        (a.id, a.reviewer, a.sender, a.awardId, a.hashIPFS, a.reviewId) = (abi.decode(bytes(_hash), (uint , address, address, uint, string, string)));
         return a;
     }
 

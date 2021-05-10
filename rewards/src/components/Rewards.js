@@ -8,22 +8,23 @@ import Identicon from 'identicon.js'
 
 const ipfsClient = require('ipfs-http-client')
 const ipfs = ipfsClient({ host: 'ipfs.infura.io', port: 5001, protocol: 'http' })
+const md5 = require('md5')
 
 function createHash(from, to, type, idreview) {
     let award = from;
-    award = award.concat('0x12938213812');
-    award = award.concat('0x021893128389');
-    award = award.concat('0');
-    award = award.concat('http://wokdwo.com/idjawji')
-    return award;
+    award = award.concat(type);
+    award = award.concat(from);
+    award = award.concat(idreview);
+    return md5(award);
 }
 
 // https://ipfs.infura.io/ipfs/"
-function uploadIPFS(award) {
+function uploadIPFS(award, type, giveAward) {
     var buf = Buffer.from(award, 'base64');
-    console.log(buf)
+    var awardHash = "https://ipfs.infura.io/ipfs/"
     ipfs.add(buf, (error, result) => {
-        console.log('Ipfs result', result)
+        awardHash = awardHash.concat(result[0].hash)
+        giveAward(type, awardHash);
         if (error) {
             console.error(error)
             return
@@ -31,7 +32,8 @@ function uploadIPFS(award) {
     })
 }
 
-const Rewards = ({ tipReviewer, sayThanks, from, to, reviewid, type }) => {
+
+const Rewards = ({ tipReviewer, sayThanks, giveAward, from, to, reviewid }) => {
     const inputRef = React.createRef();
     var amount = 0;
     return (
@@ -86,7 +88,8 @@ const Rewards = ({ tipReviewer, sayThanks, from, to, reviewid, type }) => {
                                             trigger={
                                                 <Button color='yellow' content='Gold' fluid
                                                     onClick={() => {
-                                                        var award = createHash(from, to, type, reviewid);
+                                                        var award = createHash(from, to, 0, reviewid);
+                                                        console.log(award);
                                                         let options = {
                                                             background: [255, 215, 0, 255],         // rgba white
                                                             margin: 0.2,                              // 20% margin
@@ -94,7 +97,7 @@ const Rewards = ({ tipReviewer, sayThanks, from, to, reviewid, type }) => {
                                                             format: 'png'                             // use SVG instead of PNG
                                                         };
                                                         var identicon = new Identicon(award, options).toString()
-                                                        uploadIPFS(identicon)
+                                                        uploadIPFS(identicon, 0, giveAward)
                                                     }} />
                                             }
                                             content='Give a GOLD award to the reviewer.'
@@ -107,7 +110,7 @@ const Rewards = ({ tipReviewer, sayThanks, from, to, reviewid, type }) => {
                                         <Popup
                                             trigger={<Button color='grey' content='Silver' fluid
                                                 onClick={() => {
-                                                    var award = createHash(from, to, type, reviewid);
+                                                    var award = createHash(from, to, 1, reviewid);
                                                     let options = {
                                                         background: [192, 192, 192, 255],         // rgba silver
                                                         margin: 0.2,                              // 20% margin
@@ -115,7 +118,7 @@ const Rewards = ({ tipReviewer, sayThanks, from, to, reviewid, type }) => {
                                                         format: 'png'                             // use SVG instead of PNG
                                                     };
                                                     var identicon = new Identicon(award, options).toString()
-                                                    uploadIPFS(identicon)
+                                                    uploadIPFS(identicon, 1, giveAward)
                                                 }} />}
                                             content='Give a SILVER award to the reviewer.'
                                             position='top center'
@@ -127,7 +130,7 @@ const Rewards = ({ tipReviewer, sayThanks, from, to, reviewid, type }) => {
                                         <Popup
                                             trigger={<Button color='brown' content='Bronce' fluid
                                                 onClick={() => {
-                                                    var award = createHash(from, to, type, reviewid);
+                                                    var award = createHash(from, to, 2, reviewid);
                                                     let options = {
                                                         background: [205, 127, 50, 255],         // rgba bronce
                                                         margin: 0.2,                              // 20% margin
@@ -135,7 +138,7 @@ const Rewards = ({ tipReviewer, sayThanks, from, to, reviewid, type }) => {
                                                         format: 'png'                             // use SVG instead of PNG
                                                     };
                                                     var identicon = new Identicon(award, options).toString()
-                                                    uploadIPFS(identicon)
+                                                    uploadIPFS(identicon, 2, giveAward)
                                                 }} />}
                                             content='Give a BRONCE award to the reviewer.'
                                             position='top center'

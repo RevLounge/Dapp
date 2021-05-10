@@ -8,6 +8,7 @@
     "@testing-library/user-event": "^12.1.10",
     "identicon.js": "^2.3.3",
     "ipfs-http-client": "^33.1.1",
+    "md5": "^2.3.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-scripts": "4.0.3",
