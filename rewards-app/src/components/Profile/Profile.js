@@ -1,9 +1,11 @@
 import React, { Component } from 'react'
-import { Card, Grid, Statistic, Label, Header, List, Image, GridColumn, Container, Divider, Segment } from 'semantic-ui-react'
+import { Card, Grid, Statistic, Label, Header, List, Image, GridColumn, Container, Divider, Segment, Button } from 'semantic-ui-react'
 import avatar from '../../assets/daniel.jpg'
 import api from '../../api'
 import './Profile.css'
 const stc = require('string-to-color');
+
+
 
 
 export default class Profile extends Component {
@@ -39,6 +41,24 @@ export default class Profile extends Component {
         })
     }
 
+    handleUpdateReviewer = async () => {
+       
+        
+        window.location.href = `/importReviews/${this.props.id}`
+        
+        {/*const { id, reviewId } = this.state
+        const payload = { reviewId }
+        window.alert('hola')
+
+        {await api.addRandomReviewtoReviewer(id, payload).then(res => {
+            window.alert(`Reviewer updated successfully`)
+            this.setState({
+                reviewId: '',
+            })
+        })}*/}
+    }
+
+
 
     render() {
         const { name, surname, summary, orcid, account, company, location, email, reviews } = this.state
@@ -52,10 +72,10 @@ export default class Profile extends Component {
                         <Grid.Column width={2} floated='right'>
                             {/*EMPIEZA CARD*/}
                             <Card>
-                                <Image src={`https://eu.ui-avatars.com/api/?name=${name}+${surname}+&size=512&background=${color.substring(1)}`} wrapped ui={false} />
+                                <Image src={`https://eu.ui-avatars.com/api/?name=${name}+${surname}+&size=512&background=${color.substring(1)}&color=ffff`} wrapped ui={false} />
                                 <Card.Content>
                                     <Card.Description textAlign='center' extra>
-                                        <Statistic size='small' horizontal>
+                                        <Statistic size='mini' horizontal>
                                             <Statistic.Value>309</Statistic.Value>
                                             <Statistic.Label>Reputation</Statistic.Label>
                                         </Statistic>
@@ -115,6 +135,9 @@ export default class Profile extends Component {
                         <GridColumn width={3 } />
                         <GridColumn width={9}>
                             <Header as='h2' floated='left'>Reviews ({reviews.length})</Header>
+                            <Button onClick={this.handleUpdateReviewer}>
+                                Add a new review
+                            </Button>
                             <Divider clearing />
                             <Segment>
                                 <List divided relaxed>
@@ -130,7 +153,7 @@ export default class Profile extends Component {
                                     })}
                                 </List>
                             </Segment>
-                        </GridColumn>
+                        </GridColumn>                      
                         <Grid.Column width={3} />
                     </Grid.Row>
 

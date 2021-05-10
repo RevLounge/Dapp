@@ -88,15 +88,7 @@ class LoginForm extends Component {
             })
            
             this.handleOpen()
-            sleep(1).then(() => {
-                this.handleClose()
-              })
-              
-            
-           
-       })
-       //window.location.href = '/importReviews'
-       
+       })  
     }
 
     
@@ -149,7 +141,7 @@ class LoginForm extends Component {
                     </Message>
                     <Dimmer active={active} onClickOutside={this.handleClose} page>
                         <Header as='h2' icon inverted>
-                            <Icon name='handshake outline' />
+                            <Icon name='check' />
                             Everything Worked Out!
                         </Header>
                         <Header.Subheader>Press anywhere to go back to Home Page</Header.Subheader>

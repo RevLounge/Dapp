@@ -9,7 +9,7 @@ import HeaderSearch from './components/Header/HeaderSearch';
 import TableReviewers from './components/Table/TableReviewers';
 import LoginForm from './components/LoginForm/LoginForm';
 import Profile from './components/Profile/Profile';
-import Import from './components/LoginForm/importReviews';
+import ImportReviews from './components/LoginForm/importReviews';
 
 function App() {
 
@@ -35,8 +35,10 @@ function App() {
           )}
         >
         </Route>
-        <Route exact path="/importReviews">
-          <Import></Import>
+        <Route  path="/importReviews/:id"
+        exact
+        component={ImportReviews}
+        >
         </Route>
       </Switch>
     </Router>

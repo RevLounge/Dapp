@@ -33,17 +33,23 @@ const CancelButton = styled.a.attrs({
     margin: 15px 15px 15px 5px;
 `
 
-class ReviewersAddReview extends Component {
+export default class importReviews extends Component {
     
-
-      constructor(props){
+    constructor(props){
         super(props)    
 
         this.state = {
-          id:'',
+          id: this.props.match.params.id,
           reviewId: '',
       }
     }
+
+    handleOpen = () => this.setState({ active: true })
+    handleClose = () => {
+        this.setState({ active: false })
+    }
+
+    
 
     handleChangeInputReviewId = async event => {
         const reviewId = event.target.value
@@ -53,33 +59,27 @@ class ReviewersAddReview extends Component {
 
 
     handleUpdateReviewer = async () => {
+       
+        
         const { id, reviewId } = this.state
         const payload = { reviewId }
 
         await api.addRandomReviewtoReviewer(id, payload).then(res => {
-            window.alert(`Reviewer updated successfully`)
             this.setState({
                 reviewId: '',
             })
         })
+
+        this.handleOpen()
+
     }
-
-   /* componentDidMount = async () => {
-        const { id } = this.state
-        const reviewer = await api.getReviewerById(id)
-
-        this.setState({
-            name: reviewer.data.data.name,
-            rating: reviewer.data.data.rating,
-            time: reviewer.data.data.time.join('/'),
-        })
-    }*/
 
     render() {
       
         const { reviewId, active } = this.state
         return (
-
+            
+          
           <Grid textAlign='center' style={{ height: '100vh' }} verticalAlign='middle'>
                 
                 <Grid.Column style={{ maxWidth: 450 }}>
@@ -94,41 +94,26 @@ class ReviewersAddReview extends Component {
                             <Form.Input fluid icon='edit' name='reviewId' value={reviewId} iconPosition='left' placeholder='ReviewId'  onChange={this.handleChangeInputReviewId}/>
                             
                             
-                            <Button onClick={this.handleUpdateReviewer}secondary fluid size='large'>
+                            <Button onClick={this.handleUpdateReviewer} secondary fluid size='large'>
                                 Add
                             </Button>
-                           
+                            
                         </Segment>
                     </Form>
-                    
-                    <Message>
-                        New to us? <a href='https://github.com/carlosrodrih/Rewards'>Get info</a>
-                    </Message>
+                    <p></p>
+                    <Button as={Link} to={`/reviewer/${this.state.id}`} size='large'>
+                                Go Back
+                            </Button>
                     <Dimmer active={active} onClickOutside={this.handleClose} page>
                         <Header as='h2' icon inverted>
-                            <Icon name='handshake outline' />
+                            <Icon name='check' />
                             Successfully Added!
                         </Header>
+                        <Header.Subheader>Press anywhere to close</Header.Subheader>
                     </Dimmer>
                 </Grid.Column>
-            </Grid>
-          
-            /*<Wrapper>
-                <Title>Add a review to a Reviewer</Title>
-
-                <Label>reviewId: </Label>
-                <InputText
-                    type="text"
-                    value={reviewId}
-                    onChange={this.handleChangeInputReviewId}
-                />
-
-
-                <Button onClick={this.handleUpdateReviewer}>Add Review</Button>
-                <CancelButton href={'/reviewers/list'}>Cancel</CancelButton>
-            </Wrapper>*/
+            </Grid>            
         )
     }
 }
 
-export default ReviewersAddReview
