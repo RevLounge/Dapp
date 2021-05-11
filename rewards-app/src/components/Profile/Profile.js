@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { Card, Grid, Statistic, Label, Header, List, Image, GridColumn, Container, Divider, Segment, Button } from 'semantic-ui-react'
-import avatar from '../../assets/daniel.jpg'
 import api from '../../api'
 import './Profile.css'
 const stc = require('string-to-color');
@@ -22,6 +21,10 @@ export default class Profile extends Component {
             location: '',
             email: '',
             reviews: [],
+            thanks: this.props.thanks,
+            golds: this.props.golds,
+            silvers: this.props.silvers,
+            bronzes: this.props.bronzes,
         }
     }
 
@@ -46,7 +49,7 @@ export default class Profile extends Component {
         
         window.location.href = `/importReviews/${this.props.id}`
         
-        {/*const { id, reviewId } = this.state
+        /*const { id, reviewId } = this.state
         const payload = { reviewId }
         window.alert('hola')
 
@@ -55,13 +58,13 @@ export default class Profile extends Component {
             this.setState({
                 reviewId: '',
             })
-        })}*/}
+        })}*/
     }
 
 
 
     render() {
-        const { name, surname, summary, orcid, account, company, location, email, reviews } = this.state
+        const { name, surname, summary, orcid, account, company, location, email, reviews, thanks, golds, silvers, bronzes } = this.state
         var color= stc(account)
         return (
             <div>
@@ -76,7 +79,7 @@ export default class Profile extends Component {
                                 <Card.Content>
                                     <Card.Description textAlign='center' extra>
                                         <Statistic size='mini' horizontal>
-                                            <Statistic.Value>309</Statistic.Value>
+                                            <Statistic.Value>{thanks}</Statistic.Value>
                                             <Statistic.Label>Reputation</Statistic.Label>
                                         </Statistic>
                                     </Card.Description>
@@ -86,13 +89,13 @@ export default class Profile extends Component {
                                     <a>
                                     <Header as='h5' textAlign='center'>
                                         <Label color='yellow'>
-                                            1
+                                            {golds.length}
                                         </Label>
                                         <Label color='grey'>
-                                            9
+                                            {silvers.length}
                                         </Label>
                                         <Label color='brown'>
-                                            18
+                                            {bronzes.length}
                                         </Label>
                                     </Header>
                                     </a>

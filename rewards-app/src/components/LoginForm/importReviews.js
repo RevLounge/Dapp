@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import api from '../../api'
 import { Button, Form, Grid, Header, Image, Message, Segment, Dimmer, Icon } from 'semantic-ui-react'
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import logo from '../../assets/logo-revlounge.png'
 
 import styled from 'styled-components'
@@ -34,14 +34,25 @@ const CancelButton = styled.a.attrs({
 `
 
 export default class importReviews extends Component {
-    
-    constructor(props){
-        super(props)    
+
+    constructor(props) {
+        super(props)
 
         this.state = {
-          id: this.props.match.params.id,
-          reviewId: '',
-      }
+            id: this.props.id,
+            reviewId: '',
+            review_account: '',
+            account: this.props.account,
+
+        }
+    }
+
+    componentDidMount = async () => {
+        await api.getReviewerById(this.props.id).then(reviewer => {
+            this.setState({
+                review_account: reviewer.data.data.account,
+            })
+        })
     }
 
     handleOpen = () => this.setState({ active: true })
@@ -49,7 +60,7 @@ export default class importReviews extends Component {
         this.setState({ active: false })
     }
 
-    
+
 
     handleChangeInputReviewId = async event => {
         const reviewId = event.target.value
@@ -59,12 +70,11 @@ export default class importReviews extends Component {
 
 
     handleUpdateReviewer = async () => {
-       
-        
-        const { id, reviewId } = this.state
-        const payload = { reviewId }
 
-        await api.addRandomReviewtoReviewer(id, payload).then(res => {
+
+        const { id, reviewId, review_account } = this.state
+        const payload = { reviewId }
+        await this.props.addReview(id, reviewId, review_account, payload).then(res => {
             this.setState({
                 reviewId: '',
             })
@@ -75,13 +85,35 @@ export default class importReviews extends Component {
     }
 
     render() {
-      
-        const { reviewId, active } = this.state
+
+        const { reviewId, active, review_account, account } = this.state
+        if (account != review_account) {
+            return (
+                <Grid textAlign='center' style={{ height: '100vh' }} verticalAlign='middle'>
+
+                    <Grid.Column style={{ maxWidth: 450 }}>
+                        <Image as={Link} to='/' src={logo} centered size="medium"></Image>
+                        <Header as='h2' color="black" textAlign='center' >
+                            Import a New Review
+                    </Header>
+                        <Form size='large'>
+                            <Segment>
+                            You should not be here.
+                            </Segment>
+                        </Form>
+                        <p></p>
+                        <Button as={Link} to={`/reviewer/${this.state.id}`} size='large'>
+                            Go Back
+                            </Button>
+                    </Grid.Column>
+                </Grid>
+            )
+        }
         return (
-            
-          
-          <Grid textAlign='center' style={{ height: '100vh' }} verticalAlign='middle'>
-                
+
+
+            <Grid textAlign='center' style={{ height: '100vh' }} verticalAlign='middle'>
+
                 <Grid.Column style={{ maxWidth: 450 }}>
                     <Image as={Link} to='/' src={logo} centered size="medium"></Image>
                     <Header as='h2' color="black" textAlign='center' >
@@ -89,20 +121,20 @@ export default class importReviews extends Component {
                     </Header>
                     <Form size='large'>
 
-                  
+
                         <Segment>
-                            <Form.Input fluid icon='edit' name='reviewId' value={reviewId} iconPosition='left' placeholder='ReviewId'  onChange={this.handleChangeInputReviewId}/>
-                            
-                            
+                            <Form.Input fluid icon='edit' name='reviewId' value={reviewId} iconPosition='left' placeholder='ReviewId' onChange={this.handleChangeInputReviewId} />
+
+
                             <Button onClick={this.handleUpdateReviewer} secondary fluid size='large'>
                                 Add
                             </Button>
-                            
+
                         </Segment>
                     </Form>
                     <p></p>
                     <Button as={Link} to={`/reviewer/${this.state.id}`} size='large'>
-                                Go Back
+                        Go Back
                             </Button>
                     <Dimmer active={active} onClickOutside={this.handleClose} page>
                         <Header as='h2' icon inverted>
@@ -112,7 +144,7 @@ export default class importReviews extends Component {
                         <Header.Subheader>Press anywhere to close</Header.Subheader>
                     </Dimmer>
                 </Grid.Column>
-            </Grid>            
+            </Grid>
         )
     }
 }
