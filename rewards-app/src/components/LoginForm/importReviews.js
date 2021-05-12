@@ -87,7 +87,7 @@ export default class importReviews extends Component {
     render() {
 
         const { reviewId, active, review_account, account } = this.state
-        if (account != review_account) {
+        if (account !== review_account) {
             return (
                 <Grid textAlign='center' style={{ height: '100vh' }} verticalAlign='middle'>
 

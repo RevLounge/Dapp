@@ -6,7 +6,7 @@ import {
   Route,
 } from 'react-router-dom'
 import Web3 from 'web3';
-import { Loader } from 'semantic-ui-react'
+import { Loader, Segment, Dimmer } from 'semantic-ui-react'
 import HeaderSearch from './components/Header/HeaderSearch';
 import TableReviewers from './components/Table/TableReviewers';
 import LoginForm from './components/LoginForm/LoginForm';
@@ -73,16 +73,16 @@ class App extends Component {
         var auxBronze = [];
         for (var k = 0; k < awardsCount; k++) {
           const award = await instance.methods.getAward(reviewer, k).call();
-          switch(award.awardId){
+          switch (award.awardId) {
             case '0':
-              auxGold.push(award) 
-            break;
+              auxGold.push(award)
+              break;
             case '1':
-              auxSilver.push(award) 
-            break;
+              auxSilver.push(award)
+              break;
             case '2':
-              auxBronze.push(award) 
-            break;
+              auxBronze.push(award)
+              break;
           }
         }
         this.setState({ thanks: [...this.state.thanks, thank] });
@@ -125,7 +125,7 @@ class App extends Component {
       });
   }
 
-  async addReview(reviewer_id, review_id,review_account, payload) {
+  async addReview(reviewer_id, review_id, review_account, payload) {
     this.setState({ ready: false });
     await this.state.contract.methods
       .addReviewer(0, review_account, review_id)
@@ -133,51 +133,57 @@ class App extends Component {
       .once("receipt", (receipt) => {
         this.setState({ ready: true });
         api.addRandomReviewtoReviewer(reviewer_id, payload);
-      });   
+      });
   }
 
 
-render() {
-  if (!this.state.contract) {
-    return <div>Loading Web3, accounts, and contract...</div>;
-  }
-  return (
-    <Router>
-      <Switch>
-        <Route exact path="/" render={() =>
-          this.state.ready ? (
-            <div>
-              <Loader active inline="centered" />
-            </div>
-          ) : (<div>
-            <HeaderSearch></HeaderSearch>
-            <TableReviewers thanks={this.state.thanks} golds={this.state.golds} silvers={this.state.silvers} bronzes={this.state.bronzes}/>
-          </div>
-          )}>
-        </Route>
-        <Route exact path="/join">
-          <LoginForm addReviewer={this.addReviewer} account={this.state.account}></LoginForm>
-        </Route>
-        <Route exact
-          path="/reviewer/:id"
-          render={(props) => (
-            <div>
+  render() {
+    if (!this.state.contract) {
+      return (
+        <Segment>
+          <Dimmer active>
+            <Loader  active size='massive' inline="centered">Loading</Loader>
+          </Dimmer>
+        </Segment>
+      )
+    }
+    return (
+      <Router>
+        <Switch>
+          <Route exact path="/" render={() =>
+            this.state.ready ? (
+              <div>
+                <Loader active inline="centered" />
+              </div>
+            ) : (<div>
               <HeaderSearch></HeaderSearch>
-              <Profile {...props.match.params} thanks={this.state.thanks[props.match.params.id]} golds={this.state.golds[props.match.params.id]} silvers={this.state.silvers[props.match.params.id]} bronzes={this.state.bronzes[props.match.params.id]}/>
+              <TableReviewers thanks={this.state.thanks} golds={this.state.golds} silvers={this.state.silvers} bronzes={this.state.bronzes} />
             </div>
-          )}
-        >
-        </Route>
-        <Route path="/importReviews/:id"
-          exact
-          render={(props) => (
-            <ImportReviews {...props.match.params} addReview={this.addReview} account={this.state.account}></ImportReviews>
-          )}
-        >
-        </Route>
-      </Switch>
-    </Router>
-  );
-}
+            )}>
+          </Route>
+          <Route exact path="/join">
+            <LoginForm addReviewer={this.addReviewer} account={this.state.account}></LoginForm>
+          </Route>
+          <Route exact
+            path="/reviewer/:id"
+            render={(props) => (
+              <div>
+                <HeaderSearch></HeaderSearch>
+                <Profile {...props.match.params} myaccount={this.state.account} thanks={this.state.thanks[props.match.params.id]} golds={this.state.golds[props.match.params.id]} silvers={this.state.silvers[props.match.params.id]} bronzes={this.state.bronzes[props.match.params.id]} />
+              </div>
+            )}
+          >
+          </Route>
+          <Route path="/importReviews/:id"
+            exact
+            render={(props) => (
+              <ImportReviews {...props.match.params} addReview={this.addReview} account={this.state.account}></ImportReviews>
+            )}
+          >
+          </Route>
+        </Switch>
+      </Router>
+    );
+  }
 }
 export default App;

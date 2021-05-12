@@ -29,9 +29,6 @@ export default class HeaderSearch extends Component {
 
     render() {
         const { reviewers, thanks, golds, silvers, bronzes } = this.state
-        if(this.state.reviewers.length === 0){
-            return <div>Loading data...</div>
-        }
         return (
             <Table celled basic>
                 <Table.Header>
@@ -60,6 +57,7 @@ export default class HeaderSearch extends Component {
                                 <Table.Cell textAlign='center' >
                                     <Header as='h3'>
                                         {thanks[key]}
+                                        &nbsp; 
                                         <Icon name="thumbs up outline" color="blue"></Icon>
                                     </Header>
                                 </Table.Cell>
