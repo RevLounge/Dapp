@@ -33,7 +33,7 @@ function uploadIPFS(award, type, giveAward) {
 }
 
 
-const Rewards = ({ tipReviewer, sayThanks, giveAward, from, to, reviewid }) => {
+const Rewards = ({ tipReviewer, sayThanks, giveAward, from, to, name, reviewid }) => {
     const inputRef = React.createRef();
     var amount = 0;
     return (
@@ -43,7 +43,8 @@ const Rewards = ({ tipReviewer, sayThanks, giveAward, from, to, reviewid }) => {
                 <Form size='large'>
                     <Segment>
                         <Segment textAlign='left'>From: {from}</Segment>
-                        <Segment textAlign='left'>To: {to}</Segment>
+                        <Segment textAlign='left'>To: {name}</Segment>
+                        <Segment textAlign='left'>Review: {reviewid}</Segment>
 
                         <div className="ui three buttons">
                             <Popup trigger={<Button animated='vertical'

@@ -4,14 +4,15 @@ import RewardsSuccess from './components/RewardSuccess.js';
 import RewardsContract from "./contracts/Rewards.json";
 import Web3 from 'web3';
 import './App.css';
+import api from './api'
 
 
 class App extends Component {
 
-  async componentWillMount() {
-    this.getUrlInfo();
+  async componentDidMount() {
     await this.loadWeb3()
     await this.loadBlockchainData()
+    await this.getUrlInfo();
   }
 
   async loadWeb3() {
@@ -51,13 +52,14 @@ class App extends Component {
       console.error(error);
     }
   }
+
+
   constructor(props) {
     super(props);
     this.state = {
       isSubmitted: false,
       isSuccess: true,
       tipAmount: 0,
-      from: null,
       to: null,
       account: null,
       review_id: null
@@ -109,22 +111,25 @@ class App extends Component {
     })
   }
 
-  getUrlInfo() {
+  async getUrlInfo() {
     let url_string = window.location.href
     let url = new URL(url_string);
-    let _from = this.state.account;
-    let _to = url.searchParams.get("to");
     let _review = url.searchParams.get("rev");
-
-
-    this.setState({ from: _from, to: _to, review_id: _review })
+    let account = await this.state.contract.methods.getReviewerByReview(_review).call();
+    let _reviewer = await api.getReviewerByAccount(account);
+    let name = _reviewer.data.data.name;
+    name = name.concat(" ");
+    name = name.concat(_reviewer.data.data.surname);
+    console.log(name)
+    this.setState({ to: account, review_id: _review, reviewer: name })
   }
+
 
   render() {
     return (
       <div>
         {!this.state.isSubmitted ? (
-          <Rewards tipReviewer={this.tipReviewer} sayThanks={this.sayThanks} giveAward={this.giveAward} from={this.state.account} to={this.state.to} reviewid={this.state.review_id}/>
+          <Rewards tipReviewer={this.tipReviewer} sayThanks={this.sayThanks} giveAward={this.giveAward} from={this.state.account} to={this.state.to} name={this.state.reviewer} reviewid={this.state.review_id}/>
         ) : (
           <RewardsSuccess isSuccess={this.state.isSuccess} setSubmission={this.setSubmission} />
         )}

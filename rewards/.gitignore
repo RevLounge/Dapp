@@ -2,6 +2,7 @@
 
 /src/contracts
 # dependencies
+/src/contracts
 /node_modules
 /.pnp
 .pnp.js
