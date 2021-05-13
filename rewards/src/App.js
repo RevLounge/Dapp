@@ -103,25 +103,27 @@ class App extends Component {
   giveAward(award_id, award_hash) {
     console.log(award_hash)
     this.state.contract.methods
-    .giveAward(0, this.state.to, award_id, award_hash, this.state.review_id)
-    .send({ from: this.state.account })
-    .once("receipt", (receipt) => {
-      this.setSuccess(true)
-      this.setSubmission(true)
-    })
+      .giveAward(0, this.state.to, award_id, award_hash, this.state.review_id)
+      .send({ from: this.state.account })
+      .once("receipt", (receipt) => {
+        this.setSuccess(true)
+        this.setSubmission(true)
+      })
   }
 
   async getUrlInfo() {
     let url_string = window.location.href
     let url = new URL(url_string);
     let _review = url.searchParams.get("rev");
-    let account = await this.state.contract.methods.getReviewerByReview(_review).call();
-    let _reviewer = await api.getReviewerByAccount(account);
-    let name = _reviewer.data.data.name;
-    name = name.concat(" ");
-    name = name.concat(_reviewer.data.data.surname);
-    console.log(name)
-    this.setState({ to: account, review_id: _review, reviewer: name })
+    if (_review != null) {
+      let account = await this.state.contract.methods.getReviewerByReview(_review).call();
+      let _reviewer = await api.getReviewerByAccount(account);
+      let name = _reviewer.data.data.name;
+      name = name.concat(" ");
+      name = name.concat(_reviewer.data.data.surname);
+      console.log(name)
+      this.setState({ to: account, review_id: _review, reviewer: name })
+    }
   }
 
 
@@ -129,7 +131,7 @@ class App extends Component {
     return (
       <div>
         {!this.state.isSubmitted ? (
-          <Rewards tipReviewer={this.tipReviewer} sayThanks={this.sayThanks} giveAward={this.giveAward} from={this.state.account} to={this.state.to} name={this.state.reviewer} reviewid={this.state.review_id}/>
+          <Rewards tipReviewer={this.tipReviewer} sayThanks={this.sayThanks} giveAward={this.giveAward} from={this.state.account} to={this.state.to} name={this.state.reviewer} reviewid={this.state.review_id} />
         ) : (
           <RewardsSuccess isSuccess={this.state.isSuccess} setSubmission={this.setSubmission} />
         )}
