@@ -21,9 +21,12 @@ export default class HeaderSearch extends Component {
 
     componentDidMount = async () => {
         await api.getAllReviewers().then(reviewers => {
-            this.setState({
+            if(reviewers.length !== 0){
+                this.setState({
                 reviewers: reviewers.data.data,
             })
+            }
+            
         })
     }
 
@@ -64,7 +67,7 @@ export default class HeaderSearch extends Component {
                                 <Table.Cell>
                                     <Header as='h5' textAlign='center'>
                                         <Label color='yellow'>
-                                            {golds[key].length}
+                                        {golds[key].length}
                                 </Label>
                                         <Label color='grey'>
                                             {silvers[key].length}

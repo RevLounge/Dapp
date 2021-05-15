@@ -8,10 +8,8 @@ const { promisify } = require('util')
 
 class LoginForm extends Component {
 
-
     constructor(props) {
         super(props)
-
         this.state = {
             name: '',
             surname: '',
@@ -22,6 +20,7 @@ class LoginForm extends Component {
             email: '',
             reviewId: '',
             errors: [],
+            nextPulsado: false,
         }//Si al final se añade la contraseña a la bd, añadir aqui un estado de password.
     }
 
@@ -67,9 +66,10 @@ class LoginForm extends Component {
         const reviewId = event.target.value
         this.setState({ reviewId })
     }
+    
 
     validate() {
-        const { name, surname, orcid, account, company, location, email, reviewId } = this.state
+        const { name, surname, orcid, account, company, location, email, reviewId} = this.state
         let isValid = true;
         let errors = {};
 
@@ -121,6 +121,19 @@ class LoginForm extends Component {
             }
         }
 
+        
+
+        
+        this.setState({ errors: errors })
+        console.log(this.state.errors)
+        return isValid;
+
+    }
+
+    validateReviewId(){
+        const {reviewId} = this.state
+        let isValid = true;
+        let errors = {};
         if (!reviewId) {
             isValid = false;
             errors["reviewId"] = "Please enter a link to your review."
@@ -128,15 +141,15 @@ class LoginForm extends Component {
         this.setState({ errors: errors })
         console.log(this.state.errors)
         return isValid;
-
     }
-
 
     handleIncludeReviewer = async () => {
         const { name, surname, orcid, account, company, location, email, reviewId } = this.state
         const payload = { name, surname, orcid, account, company, location, email, reviewId }
         const sleep = promisify(setTimeout)
-        if (this.validate()) {
+          
+       
+        if (this.validateReviewId()) {
             await this.props.addReviewer(reviewId, payload).then(res => {
 
                 this.setState({
@@ -153,15 +166,36 @@ class LoginForm extends Component {
                 this.handleOpen()
             });
         }
+    
+
+
     }
 
 
-
-
-
+    handleNext = async () => {
+        const { name, surname, orcid, account, company, location, email, nextPulsado} = this.state
+        const payload = { name, surname, orcid, account, company, location, email}
+        /*await this.props.setPayload(payload).then(res => {
+            window.location.href = '/join/importFirstReview'
+        });*/
+        
+        if (this.validate()) {
+            this.setState({
+                nextPulsado: true            
+            })
+        }
+        
+      
+        
+        }
+       
+    
+    
     render() {
-        const { name, surname, orcid, account, company, location, email, active, reviewId, errors } = this.state
+        const { name, surname, orcid, account, company, location, email, active, errors, reviewId } = this.state
 
+        
+        if(!this.state.nextPulsado){
         return (
 
             <Grid textAlign='center' style={{ height: '100vh' }} verticalAlign='middle'>
@@ -182,9 +216,8 @@ class LoginForm extends Component {
                             <Form.Input fluid icon='archive' name='company' value={company} iconPosition='left' placeholder='Company' onChange={this.handleChangeInputCompany} error={errors["company"] !== undefined} required />
                             <Form.Input fluid icon='map marker alternate' value={location} name='location' iconPosition='left' placeholder='Location' onChange={this.handleChangeInputLocation} error={errors["location"] !== undefined} required />
                             <Form.Input fluid icon='mail' value={email} name='email' iconPosition='left' placeholder='example@email.com' onChange={this.handleChangeInputEmail} error={errors["email"] !== undefined} required />
-                            <Form.Input fluid icon='linkify' value={reviewId} name='reviewId' iconPosition='left' placeholder='URL of your review' onChange={this.handleChangeInputReviewId} error={errors["reviewId"] !== undefined} required />
-                            <Button onClick={this.handleIncludeReviewer} secondary fluid size='large'>
-                                Register
+                            <Button onClick={this.handleNext} secondary fluid size='large'>
+                                Next
                             </Button>
                         </Segment>
                     </Form>
@@ -202,6 +235,39 @@ class LoginForm extends Component {
                 </Grid.Column>
             </Grid>
         )
+        }else{
+            return (
+            <Grid textAlign='center' style={{ height: '100vh' }} verticalAlign='middle'>
+
+            <Grid.Column style={{ maxWidth: 450 }}>
+                <Image as={Link} to='/' src={logo} centered size="medium"></Image>
+                <Header as='h2' color="black" textAlign='center' >
+                    Import Your First Review
+                </Header>
+                <Form size='large'>
+
+
+                    <Segment>
+                       
+                    <Form.Input fluid icon='linkify' value={reviewId} name='reviewId' iconPosition='left' placeholder='URL of your review' onChange={this.handleChangeInputReviewId}  required />
+                        <Button onClick={this.handleIncludeReviewer} secondary fluid size='large'>
+                            Register
+                        </Button>
+                    </Segment>
+                </Form>
+
+                
+                <Dimmer active={active} onClickOutside={this.handleClose} page>
+                    <Header as='h2' icon inverted>
+                        <Icon name='check' />
+                        Everything Worked Out!
+                    </Header>
+                    <Header.Subheader>Press anywhere to go back to Home Page</Header.Subheader>
+                </Dimmer>
+            </Grid.Column>
+        </Grid>
+            )
+        }
     }
 }
 
