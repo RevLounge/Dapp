@@ -10,12 +10,10 @@ import {
   Dimmer,
   Icon,
   Popup,
-  Progress,
-  Container,
+
 } from "semantic-ui-react";
 import { Link, Redirect } from "react-router-dom";
 import logo from "../../assets/logo-revlounge.png";
-import api from "../../api";
 const { promisify } = require("util");
 
 class LoginForm extends Component {
@@ -38,7 +36,7 @@ class LoginForm extends Component {
     }; //Si al final se añade la contraseña a la bd, añadir aqui un estado de password.
   }
 
-  
+
 
   increment = () => {
     this.setState((prevState) => ({
@@ -64,9 +62,9 @@ class LoginForm extends Component {
     window.location.href = "../";
   };
 
-  
-  
-  
+
+
+
   handleChangeInputName = async (event) => {
     const name = event.target.value;
 
@@ -307,7 +305,7 @@ class LoginForm extends Component {
       open,
     } = this.state;
 
-    
+
 
     if (!this.state.nextPulsado) {
       return (
@@ -335,12 +333,12 @@ class LoginForm extends Component {
             <Form size="large">
               <Segment color="teal" disabled="true" textAlign="left">
                 <h3>
-                  One last step. Now it's time to import your first review. 
+                  One last step. Now it's time to import your first review.
                 </h3>
               </Segment>
             </Form>
-            
-            
+
+
 
             {/*<Segment color="teal" vertical>
               <div>
@@ -348,7 +346,7 @@ class LoginForm extends Component {
               </div>
           </Segment>*/}
 
-            
+
           </Grid.Column>
 
           <Grid.Column
@@ -473,7 +471,7 @@ class LoginForm extends Component {
                 </h3>
               </Segment>
             </Form>
-            
+
             <Header as="h1" textAlign="center">
               Step 2: Import your first review!
             </Header>
@@ -490,15 +488,15 @@ class LoginForm extends Component {
             <Popup
               content={
                 <>
-                   <p><b>1º:</b> Go to your ORCID personal webpage.</p>
-                <p><b>2º:</b> Find the Peer Review Tab.</p>
-                <p>
-                <b>3º:</b> Display the information of the review you want to import.
+                  <p><b>1º:</b> Go to your ORCID personal webpage.</p>
+                  <p><b>2º:</b> Find the Peer Review Tab.</p>
+                  <p>
+                    <b>3º:</b> Display the information of the review you want to import.
                 </p>
-                <p><b>4º:</b> Press the button "show details".</p>
-                <p><b>5º:</b> Now press the link "OTHER-ID".</p>
-                <p>
-                <b>6º:</b> Once the new tab is opened, copy the URL and paste it in
+                  <p><b>4º:</b> Press the button "show details".</p>
+                  <p><b>5º:</b> Now press the link "OTHER-ID".</p>
+                  <p>
+                    <b>6º:</b> Once the new tab is opened, copy the URL and paste it in
                   our app.
                 </p>
                 </>
@@ -512,11 +510,11 @@ class LoginForm extends Component {
                 <Progress percent={this.state.percent} indicating />
               </div>
             </Segment>*/}
-            
+
           </Grid.Column>
 
           <Grid.Column style={{ maxWidth: 450 }}>
-          
+
             <Header as="h2" color="black" textAlign="center" >
               Import your first review
             </Header>

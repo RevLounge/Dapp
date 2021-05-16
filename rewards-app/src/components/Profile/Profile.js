@@ -70,7 +70,7 @@ export default class Profile extends Component {
         var color = stc(account)
         return (
             <div>
-                <p></p>
+                <p><br/></p>
                 <Grid centered>
                     <Grid.Row columns={5}>
                         <Grid.Column width={3}></Grid.Column>

@@ -92,6 +92,16 @@ class App extends Component {
       }
       this.setState({ ready: false });
       this.setState({ contract: instance });
+
+      await api.getAllReviewers().then(reviewers => {
+        if (reviewers.length !== 0) {
+          this.setState({
+            reviewers: reviewers.data.data,
+          })
+        }
+
+      })
+
     } catch (error) {
       alert("Something went wrong while loading blockchain data.");
       console.error(error);
@@ -108,7 +118,8 @@ class App extends Component {
       golds: [],
       silvers: [],
       bronzes: [],
-      ready: true
+      ready: true,
+      reviewers: [],
     }
     this.addReviewer = this.addReviewer.bind(this);
     this.addReview = this.addReview.bind(this);
@@ -142,7 +153,7 @@ class App extends Component {
       return (
         <Segment>
           <Dimmer active>
-            <Loader  active size='massive' inline="centered">Loading</Loader>
+            <Loader active size='massive' inline="centered">Loading</Loader>
           </Dimmer>
         </Segment>
       )
