@@ -34,7 +34,7 @@ class LoginForm extends Component {
       percent: 0,
       namelength: 0,
       open: false,
-    }; //Si al final se añade la contraseña a la bd, añadir aqui un estado de password.
+    };
   }
 
   increment = () => {
@@ -447,7 +447,7 @@ class LoginForm extends Component {
           verticalAlign="middle"
           columns={2}
         >
-          <Grid.Column style={{ maxWidth: 450 }} verticalAlign="bottom">
+          <Grid.Column style={{ maxWidth: 450 }} >
             <Image as={Link} to="/" src={logo} centered size="medium"></Image>
             <Header as="h1" textAlign="center" disabled="true">
               Step 1: Register in our platform
@@ -479,26 +479,15 @@ class LoginForm extends Component {
               content={
                 <>
                   <p>
-                    <b>1º:</b> Go to your ORCID personal webpage.
+                    <b>1º:</b> Find the peer review that you want to import.
                   </p>
                   <p>
-                    <b>2º:</b> Find the Peer Review Tab.
+                    <b>2º:</b> Get the URL.
                   </p>
                   <p>
-                    <b>3º:</b> Display the information of the review you want to
-                    import.
+                    <b>3º:</b> Once you have copied the URL, paste it in our platform.
                   </p>
-                  <p>
-                    <b>4º:</b> Press the button "show details".
-                  </p>
-                  <p>
-                    <b>5º:</b> Now press the link "OTHER-ID".
-                  </p>
-                  <p>
-                    <b>6º:</b> Once the new tab is opened, copy the URL and
-                    paste it in our app.
-                  </p>
-                  <Button href="http://localhost:3000/FAQ" target='_blank'>Press here for more help</Button>
+                  <Button href="http://localhost:3000/FAQ" target='_blank' centered='true'>Press here for more help</Button>
                 </>
               }
               on="click"

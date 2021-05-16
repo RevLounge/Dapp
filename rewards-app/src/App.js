@@ -168,7 +168,7 @@ class App extends Component {
                 <Loader active inline="centered" />
               </div>
             ) : (<div>
-              <HeaderSearch></HeaderSearch>
+              <HeaderSearch myaccount={this.state.account}></HeaderSearch>
               <TableReviewers thanks={this.state.thanks} golds={this.state.golds} silvers={this.state.silvers} bronzes={this.state.bronzes} />
             </div>
             )}>
@@ -180,7 +180,7 @@ class App extends Component {
             path="/reviewer/:id"
             render={(props) => (
               <div>
-                <HeaderSearch></HeaderSearch>
+                <HeaderSearch myaccount={this.state.account}></HeaderSearch>
                 <Profile {...props.match.params} myaccount={this.state.account} thanks={this.state.thanks[props.match.params.id]} golds={this.state.golds[props.match.params.id]} silvers={this.state.silvers[props.match.params.id]} bronzes={this.state.bronzes[props.match.params.id]} />
               </div>
             )}

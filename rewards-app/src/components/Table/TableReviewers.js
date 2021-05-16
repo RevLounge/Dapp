@@ -98,7 +98,7 @@ export default class HeaderSearch extends Component {
             <div>
                 &nbsp;
                 <Container fluid textAlign="center">
-                    <Input focus size="big" icon='search' placeholder='Search...' onChange={(e) => this.searchSpace(e)} centered />
+                    <Input focus size="big" icon='search' placeholder='Search reviewer´s name...' onChange={(e) => this.searchSpace(e)} centered />
                 </Container>
                 &nbsp;
                 <Table celled basic>

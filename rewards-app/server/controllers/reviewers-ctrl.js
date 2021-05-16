@@ -203,8 +203,8 @@ getReviewerByAccount = async (req, res) => {
 
         if (!reviewer) {
             return res
-                .status(404)
-                .json({ success: false, error: `Account not found` })
+                .status(200)
+                .json({ success: false, data: `Account not found` })
         }
         return res.status(200).json({ success: true, data: reviewer })
     }).catch(err => console.log(err))
