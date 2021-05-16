@@ -13,6 +13,7 @@ import LoginForm from './components/LoginForm/LoginForm';
 import Profile from './components/Profile/Profile';
 import ImportReviews from './components/LoginForm/importReviews';
 import RewardsContract from './contracts/Rewards.json';
+import FAQ from './components/FAQ/faq';
 import api from './api';
 
 class App extends Component {
@@ -189,6 +190,17 @@ class App extends Component {
             exact
             render={(props) => (
               <ImportReviews {...props.match.params} addReview={this.addReview} account={this.state.account}></ImportReviews>
+            )}
+          >
+          </Route>
+          <Route path="/FAQ"
+            exact
+            render={(props) => (
+              <div>
+              <HeaderSearch></HeaderSearch>
+              <FAQ></FAQ>
+              </div>
+              
             )}
           >
           </Route>

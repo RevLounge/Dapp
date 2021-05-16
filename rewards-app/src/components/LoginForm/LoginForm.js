@@ -10,7 +10,8 @@ import {
   Dimmer,
   Icon,
   Popup,
-
+  Progress,
+  Container,
 } from "semantic-ui-react";
 import { Link, Redirect } from "react-router-dom";
 import logo from "../../assets/logo-revlounge.png";
@@ -36,8 +37,6 @@ class LoginForm extends Component {
     }; //Si al final se añade la contraseña a la bd, añadir aqui un estado de password.
   }
 
-
-
   increment = () => {
     this.setState((prevState) => ({
       percent: prevState.percent >= 100 ? 100 : prevState.percent + 0.4,
@@ -61,9 +60,6 @@ class LoginForm extends Component {
     this.setState({ active: false });
     window.location.href = "../";
   };
-
-
-
 
   handleChangeInputName = async (event) => {
     const name = event.target.value;
@@ -305,8 +301,6 @@ class LoginForm extends Component {
       open,
     } = this.state;
 
-
-
     if (!this.state.nextPulsado) {
       return (
         <Grid textAlign="center" style={{ height: "100vh" }} columns={2}>
@@ -338,15 +332,11 @@ class LoginForm extends Component {
               </Segment>
             </Form>
 
-
-
             {/*<Segment color="teal" vertical>
               <div>
                 <Progress percent={this.state.percent} indicating />
               </div>
           </Segment>*/}
-
-
           </Grid.Column>
 
           <Grid.Column
@@ -488,34 +478,46 @@ class LoginForm extends Component {
             <Popup
               content={
                 <>
-                  <p><b>1º:</b> Go to your ORCID personal webpage.</p>
-                  <p><b>2º:</b> Find the Peer Review Tab.</p>
                   <p>
-                    <b>3º:</b> Display the information of the review you want to import.
-                </p>
-                  <p><b>4º:</b> Press the button "show details".</p>
-                  <p><b>5º:</b> Now press the link "OTHER-ID".</p>
+                    <b>1º:</b> Go to your ORCID personal webpage.
+                  </p>
                   <p>
-                    <b>6º:</b> Once the new tab is opened, copy the URL and paste it in
-                  our app.
-                </p>
+                    <b>2º:</b> Find the Peer Review Tab.
+                  </p>
+                  <p>
+                    <b>3º:</b> Display the information of the review you want to
+                    import.
+                  </p>
+                  <p>
+                    <b>4º:</b> Press the button "show details".
+                  </p>
+                  <p>
+                    <b>5º:</b> Now press the link "OTHER-ID".
+                  </p>
+                  <p>
+                    <b>6º:</b> Once the new tab is opened, copy the URL and
+                    paste it in our app.
+                  </p>
+                  <Button href="http://localhost:3000/FAQ" target='_blank'>Press here for more help</Button>
                 </>
               }
-              on='click'
-              popper={{ id: 'popper-container', style: { zIndex: 5000 } }}
-              trigger={<Segment><a>How to import a Review </a></Segment>}
+              on="click"
+              popper={{ id: "popper-container", style: { zIndex: 5000 } }}
+              trigger={
+                <Segment>
+                  <a>How to import a Review </a>
+                </Segment>
+              }
             />
             {/*<Segment color="teal">
               <div>
                 <Progress percent={this.state.percent} indicating />
               </div>
             </Segment>*/}
-
           </Grid.Column>
 
           <Grid.Column style={{ maxWidth: 450 }}>
-
-            <Header as="h2" color="black" textAlign="center" >
+            <Header as="h2" color="black" textAlign="center">
               Import your first review
             </Header>
             <Form size="large">
@@ -544,7 +546,7 @@ class LoginForm extends Component {
             <Dimmer active={active} onClickOutside={this.handleClose} page>
               <Header as="h2" icon inverted>
                 <Icon name="check" />
-               You successfully registered!
+                You successfully registered!
               </Header>
               <Header.Subheader>
                 Press anywhere to go back to Home Page
