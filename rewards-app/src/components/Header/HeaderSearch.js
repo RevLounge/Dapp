@@ -48,6 +48,10 @@ export default class HeaderSearch extends Component {
                   <Image centered as={Link} to="/" src={logo} size="medium" />
                 </GridColumn>
                 <GridColumn textAlign="right">
+                  <Button inverted as={Link} to="/FAQ">
+                    FAQs
+                    </Button>
+                    &nbsp;
                   {this.state.isRegistered ? (
                     <Button
                       inverted
@@ -61,6 +65,7 @@ export default class HeaderSearch extends Component {
                       Register
                     </Button>
                   )}
+
                 </GridColumn>
               </Grid>
             </Grid>
