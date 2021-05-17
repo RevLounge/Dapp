@@ -13,6 +13,7 @@ class App extends Component {
     await this.loadWeb3()
     await this.loadBlockchainData()
     await this.getUrlInfo();
+    await this.getReputation(this.state.to);
   }
 
   async loadWeb3() {
@@ -33,6 +34,17 @@ class App extends Component {
     try {
       const accounts = await web3.eth.getAccounts();
       this.setState({ account: accounts[0] });
+      //Search if tipper is registered
+      if (this.state.account !== '') {
+        let _tipper = await api.getReviewerByAccount(this.state.account);
+        if (_tipper != null) {
+          let name = _tipper.data.data.name;
+          name = name.concat(" ");
+          name = name.concat(_tipper.data.data.surname);
+          console.log("Tipper name: ", name)
+          this.setState({ tipper: name })
+        }
+      }
       // Get the contract instance.
       const networkId = await web3.eth.net.getId();
       const deployedNetwork = RewardsContract.networks[networkId];
@@ -60,9 +72,16 @@ class App extends Component {
       isSubmitted: false,
       isSuccess: true,
       tipAmount: 0,
-      to: null,
-      account: null,
-      review_id: null
+      to: '',
+      account: '',
+      review_id: '',
+      tipper: '',
+      reputation: 0,
+      reviews: 0,
+      golds: [],
+      silver: [],
+      bronzes: [],
+      ready: false,
     }
 
     this.sayThanks = this.sayThanks.bind(this);
@@ -111,32 +130,73 @@ class App extends Component {
       })
   }
 
+  async getReputation(account) {
+    if (account !== '') {
+      const thank = await this.state.contract.methods.getReputation(account).call();
+      const awardsCount = await this.state.contract.methods.getAwardsBalance(account).call();
+      var auxGold = [];
+      var auxSilver = [];
+      var auxBronze = [];
+      for (var i = 0; i < awardsCount; i++) {
+        const award = await this.state.contract.methods.getAward(account, i).call();
+        switch (award.awardId) {
+          case '0':
+            auxGold.push(award)
+            break;
+          case '1':
+            auxSilver.push(award)
+            break;
+          case '2':
+            auxBronze.push(award)
+            break;
+        }
+      }
+      this.setState({ reputation: thank });
+      this.setState({ golds: auxGold });
+      this.setState({ silvers: auxSilver });
+      this.setState({ bronzes: auxBronze });
+      this.setState({ ready: true })
+    }
+  }
+
   async getUrlInfo() {
     let url_string = window.location.href
     let url = new URL(url_string);
     let _review = url.searchParams.get("rev");
+    console.log(_review)
     if (_review != null) {
       let account = await this.state.contract.methods.getReviewerByReview(_review).call();
-      let _reviewer = await api.getReviewerByAccount(account);
-      let name = _reviewer.data.data.name;
-      name = name.concat(" ");
-      name = name.concat(_reviewer.data.data.surname);
-      console.log(name)
-      this.setState({ to: account, review_id: _review, reviewer: name })
+      if (account != null) {
+        let _reviewer = await api.getReviewerByAccount(account);
+        let name = _reviewer.data.data.name;
+        name = name.concat(" ");
+        name = name.concat(_reviewer.data.data.surname);
+        console.log(name)
+        this.setState({ to: account, review_id: _review, reviewer: name, reviews: _reviewer.data.data.reviews.length })
+      }
     }
+
   }
 
 
   render() {
-    return (
-      <div>
-        {!this.state.isSubmitted ? (
-          <Rewards tipReviewer={this.tipReviewer} sayThanks={this.sayThanks} giveAward={this.giveAward} from={this.state.account} to={this.state.to} name={this.state.reviewer} reviewid={this.state.review_id} />
-        ) : (
-          <RewardsSuccess isSuccess={this.state.isSuccess} setSubmission={this.setSubmission} />
-        )}
-      </div>
-    );
+    if (this.state.ready) {
+      return (
+        <div>
+          {!this.state.isSubmitted ? (
+            <Rewards tipReviewer={this.tipReviewer} sayThanks={this.sayThanks} giveAward={this.giveAward} reputation={this.state.reputation} reviews={this.state.reviews}
+              golds={this.state.golds} silvers={this.state.silvers} bronzes={this.state.bronzes}
+              from={this.state.account} to={this.state.to} name={this.state.reviewer} reviewid={this.state.review_id} tipper={this.state.tipper} />
+          ) : (
+            <RewardsSuccess isSuccess={this.state.isSuccess} setSubmission={this.setSubmission} />
+          )}
+        </div>
+      );
+    } else {
+      return (
+        <div>Loading information...</div>
+      )
+    }
   }
 }
 
