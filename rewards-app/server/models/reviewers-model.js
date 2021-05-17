@@ -17,7 +17,6 @@ const Reviewer = new Schema(
         location: {type : String, required: true},
         email: {type : String, required: true},
         reviews:[{
-            //_id: { type: Number, required: true }, //Se genera el _id propio de mongo
             reviewId: String,
             title: String,
             description : String,

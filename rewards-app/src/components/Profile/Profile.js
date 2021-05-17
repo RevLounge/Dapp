@@ -155,7 +155,7 @@ export default class Profile extends Component {
                                         return (
                                             <List.Item>
                                                 <List.Content>
-                                                    <List.Header><a href={review.reviewId}>{review.title}</a></List.Header>
+                                                    <List.Header><a href={review.reviewId} target="_blank">{review.title}</a></List.Header>
                                                     {review.description}
                                                     <Image
                                                         src={boton}

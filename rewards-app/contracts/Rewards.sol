@@ -17,7 +17,7 @@ contract Rewards {
     }
 
     struct Award {
-        uint id;//Id de la revision
+        uint id;
         address reviewer;
         address sender;
         uint awardId;
