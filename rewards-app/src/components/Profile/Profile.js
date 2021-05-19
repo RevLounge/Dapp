@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Card, Grid, Statistic, Label, Header, List, Image, GridColumn, Container, Divider, Segment, Button, Popup } from 'semantic-ui-react'
+import { Card, Grid, Statistic, Label, Header, List, Image, GridColumn, Container, Divider, Segment, Button, Modal, Popup } from 'semantic-ui-react'
 import api from '../../api'
 import boton from './boton.png'
 import './Profile.css'
@@ -70,7 +70,7 @@ export default class Profile extends Component {
         var color = stc(account)
         return (
             <div>
-                <p><br/></p>
+                <p><br /></p>
                 <Grid centered>
                     <Grid.Row columns={5}>
                         <Grid.Column width={3}></Grid.Column>
@@ -151,7 +151,8 @@ export default class Profile extends Component {
                             <Divider clearing />
                             <Segment>
                                 <List divided relaxed>
-                                    {reviews.map((review) => {
+                                    {reviews.map((review, id) => {
+                                        let open = false;
                                         return (
                                             <List.Item>
                                                 <List.Content>
@@ -166,7 +167,91 @@ export default class Profile extends Component {
                                                         target='_blank'
                                                     />
                                                 </List.Content>
-
+                                                <List.Description>
+                                                    <Modal
+                                                        trigger={<Button>Show Adwards</Button>}
+                                                    >
+                                                        <Modal.Header>Awards for {review.reviewId}</Modal.Header>
+                                                        <Modal.Content>
+                                                            <Grid>
+                                                                <Grid.Row columns='3' divided>
+                                                                    <Grid.Column>
+                                                                        <Segment raised inverted color='yellow' textAlign='center' size='small' fluid>Gold</Segment>
+                                                                        <Image.Group>
+                                                                            {golds.map((gold, key) => {
+                                                                                if (gold.reviewId === review.reviewId) {
+                                                                                    return (
+                                                                                        <Popup
+                                                                                            trigger={<Image key={key}
+                                                                                                size="mini"
+                                                                                                src={gold.hashIPFS}
+                                                                                                href={gold.hashIPFS}
+                                                                                            />}
+                                                                                            inverted
+                                                                                        >
+                                                                                            <p>Gold Award Received!</p>
+                                                                                            <p>From: {gold.sender}</p>
+                                                                                            <p>To: { name + " " + surname}</p>
+                                                                                        </Popup>
+                                                                                    )
+                                                                                }
+                                                                            })
+                                                                            }
+                                                                        </Image.Group>
+                                                                    </Grid.Column>
+                                                                    <Grid.Column>
+                                                                        <Segment raised inverted color='grey' textAlign='center' size='small' fluid>Silver</Segment>
+                                                                        <Image.Group>
+                                                                            {silvers.map((silver, key) => {
+                                                                                if (silver.reviewId === review.reviewId) {
+                                                                                    return (
+                                                                                        <Popup
+                                                                                            trigger={<Image key={key}
+                                                                                                size="mini"
+                                                                                                src={silver.hashIPFS}
+                                                                                                href={silver.hashIPFS}
+                                                                                            />}
+                                                                                            inverted
+                                                                                        >
+                                                                                            <p>Silver Award Received!</p>
+                                                                                            <p>From: {silver.sender}</p>
+                                                                                            <p>To: { name + " " + surname}</p>
+                                                                                        </Popup>
+                                                                                    )
+                                                                                }
+                                                                            })
+                                                                            }
+                                                                        </Image.Group>
+                                                                    </Grid.Column>
+                                                                    <Grid.Column>
+                                                                        <Segment raised inverted color='brown' textAlign='center' size='small' fluid>Bronze</Segment>
+                                                                        <Image.Group>
+                                                                            {bronzes.map((bronze, key) => {
+                                                                                if (bronze.reviewId === review.reviewId) {
+                                                                                    return (
+                                                                                        <Popup
+                                                                                            trigger={<Image key={key}
+                                                                                                size="mini"
+                                                                                                src={bronze.hashIPFS}
+                                                                                                href={bronze.hashIPFS}
+                                                                                            />}
+                                                                                            inverted
+                                                                                        >
+                                                                                            <p>Bronze Award Received!</p>
+                                                                                            <p>From: {bronze.sender}</p>
+                                                                                            <p>To: { name + " " + surname}</p>
+                                                                                        </Popup>
+                                                                                    )
+                                                                                }
+                                                                            })
+                                                                            }
+                                                                        </Image.Group>
+                                                                    </Grid.Column>
+                                                                </Grid.Row>
+                                                            </Grid>
+                                                        </Modal.Content>
+                                                    </Modal>
+                                                </List.Description>
                                             </List.Item>
                                         )
                                     })}
@@ -179,7 +264,7 @@ export default class Profile extends Component {
                     <Grid.Row columns={3}>
                         <GridColumn width={3} />
                         <GridColumn width={9}>
-                            <Header as='h2' floated='left'>Rewards ({golds.length + silvers.length + bronzes.length})</Header>
+                            <Header as='h2' floated='left'>Awards ({golds.length + silvers.length + bronzes.length})</Header>
                             <Divider clearing />
                             <Grid>
                                 <Grid.Row columns='3' divided>
@@ -198,7 +283,7 @@ export default class Profile extends Component {
                                                     >
                                                         <p>Gold Award Received!</p>
                                                         <p>From: {gold.sender}</p>
-                                                        <p>To: {gold.reviewer}</p>
+                                                        <p>To: { name + " " + surname}</p>
                                                         <p>Review: {gold.reviewId}</p>
                                                     </Popup>
                                                 )
@@ -221,7 +306,7 @@ export default class Profile extends Component {
                                                     >
                                                         <p>Silver Award Received!</p>
                                                         <p>From: {silver.sender}</p>
-                                                        <p>To: {silver.reviewer}</p>
+                                                        <p>To: { name + " " + surname}</p>
                                                         <p>Review: {silver.reviewId}</p>
                                                     </Popup>
                                                 )
@@ -244,7 +329,7 @@ export default class Profile extends Component {
                                                     >
                                                         <p>Bronze Award Received!</p>
                                                         <p>From: {bronze.sender}</p>
-                                                        <p>To: {bronze.reviewer}</p>
+                                                        <p>To: { name + " " + surname}</p>
                                                         <p>Review: {bronze.reviewId}</p>
                                                     </Popup>
                                                 )
@@ -258,7 +343,7 @@ export default class Profile extends Component {
                         <Grid.Column width={3} />
                     </Grid.Row>
                 </Grid>
-            </div>
+            </div >
         )
     }
 }

@@ -106,7 +106,7 @@ export default class HeaderSearch extends Component {
                         <Table.Row>
                             <Table.HeaderCell singleLine>Reviewer</Table.HeaderCell>
                             <Table.HeaderCell>Reputation</Table.HeaderCell>
-                            <Table.HeaderCell>Rewards</Table.HeaderCell>
+                            <Table.HeaderCell>A wards</Table.HeaderCell>
                             <Table.HeaderCell>Contact</Table.HeaderCell>
                         </Table.Row>
                     </Table.Header>

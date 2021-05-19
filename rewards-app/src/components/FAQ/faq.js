@@ -99,7 +99,7 @@ const paneles = [
       content: (
         <Label
           color="blue"
-          content={"How can I implement your button in my publishing platform?"}
+          content={"How can I use the rewards module in my publishing platform?"}
           size="big"
         />
       ),
@@ -109,10 +109,25 @@ const paneles = [
         <Message info header={"Don't worry, it's really easy"} content={<Segment>
           <h3>■ You just need to download our package using 'npm' or 'yarn'.</h3>
           <h3>■ Just tipe this command:</h3>
-          <h3>INSERT IMAGE HERE</h3>
+          <h3>
+            <Segment>
+              <p>npm install @carlosrodriher/rewards-button</p>
+              <p>or</p>
+              <p>yarn add @carlosrodriher/rewards-button</p>
+            </Segment>
+          </h3>
           <h3>■ And now you can just need to give us the review ID by calling our package.</h3>
-          <h3>■ Just tipe this command:</h3>
-          <h3>INSERT COMMAND HERE</h3>
+          <h3>■ Use in React:</h3>
+          <h3>
+            <Segment>
+              <p>
+                import RewardButton from '@carlosrodriher/rewards-button'
+              </p>
+              <p>
+                {`<RewardButton review="review url"></RewardButton>`}
+              </p>
+            </Segment>
+          </h3>
           <h3>■ And that's all! The button will be connected to our server and to the blockchain, we will check that the user
           is already registered in our platform in order to save all the details in the contract and we will manage all the
           operations that are necessary to work.
