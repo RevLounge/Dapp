@@ -151,8 +151,7 @@ export default class Profile extends Component {
                             <Divider clearing />
                             <Segment>
                                 <List divided relaxed>
-                                    {reviews.map((review, id) => {
-                                        let open = false;
+                                    {reviews.map((review) => {
                                         return (
                                             <List.Item>
                                                 <List.Content>

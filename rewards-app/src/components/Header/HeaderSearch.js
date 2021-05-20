@@ -9,7 +9,6 @@ import {
 } from "semantic-ui-react";
 import "./Header.css";
 import { Link } from "react-router-dom";
-import logoAntiguo from "./logo-revlounge-white.png";
 import logo from "./logo.png";
 //import Identicon from 'identicon.js';
 import api from "../../api";

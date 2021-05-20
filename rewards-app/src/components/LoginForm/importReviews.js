@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import api from '../../api'
-import { Button, Form, Grid, Header, Image, Message, Segment, Dimmer, Icon } from 'semantic-ui-react'
+import { Button, Form, Grid, Header, Image, Popup, Segment, Dimmer, Icon } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 import logo from '../../assets/logo-revlounge.png'
 
@@ -95,16 +95,16 @@ export default class importReviews extends Component {
                         <Image as={Link} to='/' src={logo} centered size="medium"></Image>
                         <Header as='h2' color="black" textAlign='center' >
                             Import a New Review
-                    </Header>
+                        </Header>
                         <Form size='large'>
                             <Segment>
-                            You should not be here.
+                                You should not be here.
                             </Segment>
                         </Form>
                         <p></p>
                         <Button as={Link} to={`/reviewer/${this.state.id}`} size='large'>
                             Go Back
-                            </Button>
+                        </Button>
                     </Grid.Column>
                 </Grid>
             )
@@ -123,7 +123,7 @@ export default class importReviews extends Component {
 
 
                         <Segment>
-                            <Form.Input fluid icon='edit' name='reviewId' value={reviewId} iconPosition='left' placeholder='ReviewId' onChange={this.handleChangeInputReviewId} />
+                            <Form.Input fluid icon='edit' name='reviewId' value={reviewId} iconPosition='left' placeholder='Review link' onChange={this.handleChangeInputReviewId} />
 
 
                             <Button onClick={this.handleUpdateReviewer} secondary fluid size='large'>
@@ -133,9 +133,34 @@ export default class importReviews extends Component {
                         </Segment>
                     </Form>
                     <p></p>
-                    <Button as={Link} to={`/reviewer/${this.state.id}`} size='large'>
-                        Go Back
-                            </Button>
+                    <Button.Group widths='2' basic>
+                        <Popup
+                            trigger={
+                                <Button>
+                                    How to import?
+                                </Button>
+                            }
+                            content={
+                                <div>
+                                    <p>
+                                        <b>1º:</b> Find the peer review that you want to import.
+                                    </p>
+                                    <p>
+                                        <b>2º:</b> Get the URL.
+                                    </p>
+                                    <p>
+                                        <b>3º:</b> Once you have copied the URL, paste it in our platform.
+                                    </p>
+                                    <Button href="http://localhost:3000/FAQ" target='_blank' centered>More help</Button>
+                                </div>
+                            }
+                            on="click"
+                            popper={{ id: "popper-container", style: { zIndex: 5000 } }}
+                        />
+                        <Button as={Link} to={`/reviewer/${this.state.id}`} size='large'>
+                            Go back
+                        </Button>
+                    </Button.Group>
                     <Dimmer active={active} onClickOutside={this.handleClose} page>
                         <Header as='h2' icon inverted>
                             <Icon name='check' />

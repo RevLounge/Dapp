@@ -10,8 +10,6 @@ import {
   Dimmer,
   Icon,
   Popup,
-  Progress,
-  Container,
 } from "semantic-ui-react";
 import { Link, Redirect } from "react-router-dom";
 import logo from "../../assets/logo-revlounge.png";
@@ -434,7 +432,7 @@ class LoginForm extends Component {
 
             <Message>
               New to us?{" "}
-              <a href="https://github.com/carlosrodrih/Rewards">Get info</a>
+              <a href="http://localhost:3000/FAQ" target='_blank'>Get info</a>
             </Message>
           </Grid.Column>
         </Grid>

@@ -6,7 +6,7 @@ import {
   Route,
 } from 'react-router-dom'
 import Web3 from 'web3';
-import { Loader, Segment, Dimmer } from 'semantic-ui-react'
+import { Loader, Dimmer, Image, Header, Button, Modal } from 'semantic-ui-react'
 import HeaderSearch from './components/Header/HeaderSearch';
 import TableReviewers from './components/Table/TableReviewers';
 import LoginForm from './components/LoginForm/LoginForm';
@@ -15,6 +15,7 @@ import ImportReviews from './components/LoginForm/importReviews';
 import RewardsContract from './contracts/Rewards.json';
 import FAQ from './components/FAQ/faq';
 import api from './api';
+import logometamask from './assets/metamask.png';
 
 class App extends Component {
 
@@ -32,7 +33,8 @@ class App extends Component {
       window.web3 = new Web3(window.web3.currentProvider)
     }
     else {
-      window.alert('Non-Ethereum browser detected. You should consider trying MetaMask!')
+      this.setState({ metamask: false })
+      //window.alert('Non-Ethereum browser detected. You should consider trying MetaMask!')
     }
   }
 
@@ -104,7 +106,7 @@ class App extends Component {
       })
 
     } catch (error) {
-      alert("Something went wrong while loading blockchain data.");
+      //alert("Something went wrong while loading blockchain data.");
       console.error(error);
     }
   };
@@ -121,6 +123,7 @@ class App extends Component {
       bronzes: [],
       ready: true,
       reviewers: [],
+      metamask: true,
     }
     this.addReviewer = this.addReviewer.bind(this);
     this.addReview = this.addReview.bind(this);
@@ -151,13 +154,37 @@ class App extends Component {
 
   render() {
     if (!this.state.contract) {
-      return (
-        <Segment>
-          <Dimmer active>
-            <Loader active size='massive' inline="centered">Loading</Loader>
+      if (!this.state.metamask) {
+        return (
+          <Dimmer page active>
+            <Image src={logometamask} size='small' inline="centered"></Image>
+            <Header inverted>Non-Ethereum browser detected. You should consider trying Metamask!</Header>
+            <Modal
+              trigger={<Button>How to install it?</Button>}
+              actions={['Snooze', { key: 'done', content: 'Done', positive: true }]}
+            >
+              <Modal.Header>
+                What is MetaMask?
+            </Modal.Header>
+              <Modal.Content>
+                <a href='https://metamask.io'>MetaMask</a> is an extension for Chrome or Firefox that connects to an Ethereum network and allows to interact with dapps like this one.
+              <Header as='h3'>Installing Metamask</Header>
+                <ul>
+                  <li>To install MetaMask for Chrome, go to the <a href='https://chrome.google.com/webstore/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn'>Chrome Web Store</a> and click the <b>Add to Chrome</b> button.</li>
+                  <li>To install MetaMask for FireFox, go to the <a href='https://addons.mozilla.org/en-US/firefox/addon/ether-metamask/'>Firefox Add-ons page</a> and click the <b>Add to Firefox</b> button.</li>
+                </ul>
+                Then import your private keys from ganache using the MENEMONIC as import seed phrase. Now you will be ready to use our dapp.
+              </Modal.Content>
+            </Modal>
           </Dimmer>
-        </Segment>
-      )
+        )
+      } else {
+        return (
+          <Dimmer page active>
+            <Loader active size='massive' inline="centered">Loading...</Loader>
+          </Dimmer>
+        )
+      }
     }
     return (
       <Router>
@@ -197,10 +224,10 @@ class App extends Component {
             exact
             render={(props) => (
               <div>
-              <HeaderSearch></HeaderSearch>
-              <FAQ></FAQ>
+                <HeaderSearch></HeaderSearch>
+                <FAQ></FAQ>
               </div>
-              
+
             )}
           >
           </Route>
