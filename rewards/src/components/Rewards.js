@@ -35,7 +35,7 @@ function uploadIPFS(award, type, giveAward) {
 }
 
 
-const Rewards = ({ tipReviewer, sayThanks, giveAward, reputation, reviews, golds, silvers, bronzes, from, to, name, reviewid, tipper }) => {
+const Rewards = ({ tipReviewer, sayThanks, giveAward, reputation, reviews, golds, silvers, bronzes, from, to, reviewer, reviewid, tipper }) => {
     const inputRef = React.createRef();
     var active = false;
     var amount = 0;
@@ -93,7 +93,7 @@ const Rewards = ({ tipReviewer, sayThanks, giveAward, reputation, reviews, golds
                                 <Popup wide='very' trigger={<Button animated='vertical'
                                     basic color="green"
                                 >
-                                    <Button.Content hidden>Reward!</Button.Content>
+                                    <Button.Content hidden>Award!</Button.Content>
                                     <Button.Content visible>
                                         <Icon name='trophy' />
                                     </Button.Content></Button>} on='click'>
@@ -173,13 +173,13 @@ const Rewards = ({ tipReviewer, sayThanks, giveAward, reputation, reviews, golds
                 </Grid.Column>
                 <Grid.Column style={{ maxWidth: 480 }}>
                     <Segment>
-                        {(name !== '') ? (<div>
+                        {(reviewer !== '') ? (<div>
                             <Header as='h3' textAlign='left' dividing>
                                 You are rewarding this reviewer:
                             </Header>
                             <Segment textAlign='left'>
-                                <Image spaced='right' size='tiny' src={`https://eu.ui-avatars.com/api/?name=${name}+&size=512&background=${stc(to).substring(1)}&color=ffff`} avatar />
-                                <span>{name}</span>
+                                <Image spaced='right' size='tiny' src={`https://eu.ui-avatars.com/api/?name=${reviewer.data.data.name + reviewer.data.data.surname}+&size=512&background=${stc(to).substring(1)}&color=ffff`} avatar />
+                                <Header href={`http://localhost:3000/reviewer/${reviewer.data.data._id}`} target='_blank'>{reviewer.data.data.name + reviewer.data.data.surname}</Header>
                                 <Divider ></Divider>
                                 <Statistic.Group widths='3' size="mini">
                                     <Statistic>
@@ -235,7 +235,7 @@ const Rewards = ({ tipReviewer, sayThanks, giveAward, reputation, reviews, golds
                                                         >
                                                             <p>Gold Award Received!</p>
                                                             <p>From: {gold.sender}</p>
-                                                            <p>To: {name}</p>
+                                                            <p>To: {reviewer.data.data.name + reviewer.data.data.surname}</p>
                                                         </Popup>
                                                     )
                                                 }
@@ -259,7 +259,7 @@ const Rewards = ({ tipReviewer, sayThanks, giveAward, reputation, reviews, golds
                                                         >
                                                             <p>Silver Award Received!</p>
                                                             <p>From: {silver.sender}</p>
-                                                            <p>To: {name}</p>
+                                                            <p>To: {reviewer.data.data.name + reviewer.data.data.surname}</p>
                                                         </Popup>
                                                     )
                                                 }
@@ -283,7 +283,7 @@ const Rewards = ({ tipReviewer, sayThanks, giveAward, reputation, reviews, golds
                                                         >
                                                             <p>Bronze Award Received!</p>
                                                             <p>From: {bronze.sender}</p>
-                                                            <p>To: {name}</p>
+                                                            <p>To: {reviewer.data.data.name + reviewer.data.data.surname}</p>
                                                         </Popup>
                                                     )
                                                 }

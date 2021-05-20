@@ -40,7 +40,7 @@
       "type": "function"
     }
   ],
-  "metadata": "{\"compiler\":{\"version\":\"0.8.1+commit.df193b15\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"address\",\"name\":\"owner\",\"type\":\"address\"}],\"name\":\"balanceOf\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"balance\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"string\",\"name\":\"tokenId\",\"type\":\"string\"}],\"name\":\"ownerOf\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"owner\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"details\":\"Required interface of an ERC721 compliant contract.\",\"kind\":\"dev\",\"methods\":{\"balanceOf(address)\":{\"details\":\"Returns the number of tokens in ``owner``'s account.\"},\"ownerOf(string)\":{\"details\":\"Returns the owner of the `tokenId` token. Requirements: - `tokenId` must exist.\"}},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"/C/Users/carlo/Desktop/UCM/TFG/FrontEnd-TFG/contracts/IAwardsToken.sol\":\"IAwardsToken\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"/C/Users/carlo/Desktop/UCM/TFG/FrontEnd-TFG/contracts/IAwardsToken.sol\":{\"keccak256\":\"0x52d8f85d663730ffcf1b156935e32b3a65dc811363c6db49029521afa5b33d5d\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://7523f8bcbbb95feea1ae1b98cf476d59c48cd5d129ee78aab363289e81e772be\",\"dweb:/ipfs/QmQqZJttdB2exi3noDtGPkAtVufPKCHsfd5yjCEKykW9Ez\"]}},\"version\":1}",
+  "metadata": "{\"compiler\":{\"version\":\"0.8.1+commit.df193b15\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"address\",\"name\":\"owner\",\"type\":\"address\"}],\"name\":\"balanceOf\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"balance\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"string\",\"name\":\"tokenId\",\"type\":\"string\"}],\"name\":\"ownerOf\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"owner\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"details\":\"Required interface of an ERC721 compliant contract.\",\"kind\":\"dev\",\"methods\":{\"balanceOf(address)\":{\"details\":\"Returns the number of tokens in ``owner``'s account.\"},\"ownerOf(string)\":{\"details\":\"Returns the owner of the `tokenId` token. Requirements: - `tokenId` must exist.\"}},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"/C/Users/carlo/Desktop/UCM/TFG/popup/Rewards/rewards-app/contracts/IAwardsToken.sol\":\"IAwardsToken\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"/C/Users/carlo/Desktop/UCM/TFG/popup/Rewards/rewards-app/contracts/IAwardsToken.sol\":{\"keccak256\":\"0x52d8f85d663730ffcf1b156935e32b3a65dc811363c6db49029521afa5b33d5d\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://7523f8bcbbb95feea1ae1b98cf476d59c48cd5d129ee78aab363289e81e772be\",\"dweb:/ipfs/QmQqZJttdB2exi3noDtGPkAtVufPKCHsfd5yjCEKykW9Ez\"]}},\"version\":1}",
   "bytecode": "0x",
   "deployedBytecode": "0x",
   "immutableReferences": {},
@@ -49,9 +49,9 @@
   "sourceMap": "",
   "deployedSourceMap": "",
   "source": "// SPDX-License-Identifier: MIT\r\n\r\npragma solidity ^0.8.0;\r\n\r\n/**\r\n * @dev Required interface of an ERC721 compliant contract.\r\n */\r\ninterface IAwardsToken {\r\n    /**\r\n     * @dev Returns the number of tokens in ``owner``'s account.\r\n     */\r\n    function balanceOf(address owner) external view returns (uint256 balance);\r\n\r\n    /**\r\n     * @dev Returns the owner of the `tokenId` token.\r\n     *\r\n     * Requirements:\r\n     *\r\n     * - `tokenId` must exist.\r\n     */\r\n    function ownerOf(string memory tokenId) external view returns (address owner);\r\n}",
-  "sourcePath": "C:\\Users\\carlo\\Desktop\\UCM\\TFG\\FrontEnd-TFG\\contracts\\IAwardsToken.sol",
+  "sourcePath": "C:\\Users\\carlo\\Desktop\\UCM\\TFG\\popup\\Rewards\\rewards-app\\contracts\\IAwardsToken.sol",
   "ast": {
-    "absolutePath": "/C/Users/carlo/Desktop/UCM/TFG/FrontEnd-TFG/contracts/IAwardsToken.sol",
+    "absolutePath": "/C/Users/carlo/Desktop/UCM/TFG/popup/Rewards/rewards-app/contracts/IAwardsToken.sol",
     "exportedSymbols": {
       "IAwardsToken": [
         228
@@ -273,7 +273,7 @@
     "src": "35:518:1"
   },
   "legacyAST": {
-    "absolutePath": "/C/Users/carlo/Desktop/UCM/TFG/FrontEnd-TFG/contracts/IAwardsToken.sol",
+    "absolutePath": "/C/Users/carlo/Desktop/UCM/TFG/popup/Rewards/rewards-app/contracts/IAwardsToken.sol",
     "exportedSymbols": {
       "IAwardsToken": [
         228
@@ -500,7 +500,7 @@
   },
   "networks": {},
   "schemaVersion": "3.4.0",
-  "updatedAt": "2021-05-02T12:49:32.880Z",
+  "updatedAt": "2021-05-19T20:17:23.976Z",
   "devdoc": {
     "details": "Required interface of an ERC721 compliant contract.",
     "kind": "dev",

@@ -5,6 +5,7 @@ import RewardsContract from "./contracts/Rewards.json";
 import Web3 from 'web3';
 import './App.css';
 import api from './api'
+import { Dimmer, Loader } from 'semantic-ui-react';
 
 
 class App extends Component {
@@ -163,16 +164,11 @@ class App extends Component {
     let url_string = window.location.href
     let url = new URL(url_string);
     let _review = url.searchParams.get("rev");
-    console.log(_review)
     if (_review != null) {
       let account = await this.state.contract.methods.getReviewerByReview(_review).call();
       if (account != null) {
         let _reviewer = await api.getReviewerByAccount(account);
-        let name = _reviewer.data.data.name;
-        name = name.concat(" ");
-        name = name.concat(_reviewer.data.data.surname);
-        console.log(name)
-        this.setState({ to: account, review_id: _review, reviewer: name, reviews: _reviewer.data.data.reviews.length })
+        this.setState({ to: account, review_id: _review, reviewer: _reviewer })
       }
     }
 
@@ -186,7 +182,7 @@ class App extends Component {
           {!this.state.isSubmitted ? (
             <Rewards tipReviewer={this.tipReviewer} sayThanks={this.sayThanks} giveAward={this.giveAward} reputation={this.state.reputation} reviews={this.state.reviews}
               golds={this.state.golds} silvers={this.state.silvers} bronzes={this.state.bronzes}
-              from={this.state.account} to={this.state.to} name={this.state.reviewer} reviewid={this.state.review_id} tipper={this.state.tipper} />
+              from={this.state.account} to={this.state.to} reviewer={this.state.reviewer} reviewid={this.state.review_id} tipper={this.state.tipper} />
           ) : (
             <RewardsSuccess isSuccess={this.state.isSuccess} setSubmission={this.setSubmission} />
           )}
@@ -194,7 +190,9 @@ class App extends Component {
       );
     } else {
       return (
-        <div>Loading information...</div>
+        <Dimmer page active>
+            <Loader active size='massive' inline="centered">Loading...</Loader>
+        </Dimmer>
       )
     }
   }
