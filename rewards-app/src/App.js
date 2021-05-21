@@ -146,8 +146,8 @@ class App extends Component {
       .addReviewer(0, review_account, review_id)
       .send({ from: review_account })
       .once("receipt", (receipt) => {
-        this.setState({ ready: true });
         api.addRandomReviewtoReviewer(reviewer_id, payload);
+        this.setState({ ready: true });
       });
   }
 
@@ -161,7 +161,6 @@ class App extends Component {
             <Header inverted>Non-Ethereum browser detected. You should consider trying Metamask!</Header>
             <Modal
               trigger={<Button>How to install it?</Button>}
-              actions={['Snooze', { key: 'done', content: 'Done', positive: true }]}
             >
               <Modal.Header>
                 What is MetaMask?
@@ -191,9 +190,9 @@ class App extends Component {
         <Switch>
           <Route exact path="/" render={() =>
             this.state.ready ? (
-              <div>
-                <Loader active inline="centered" />
-              </div>
+              <Dimmer page active>
+                <Loader active size='massive' inline="centered">Loading...</Loader>
+              </Dimmer>
             ) : (<div>
               <HeaderSearch myaccount={this.state.account}></HeaderSearch>
               <TableReviewers thanks={this.state.thanks} golds={this.state.golds} silvers={this.state.silvers} bronzes={this.state.bronzes} />

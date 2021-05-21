@@ -80,25 +80,36 @@ export default class Profile extends Component {
                                 <Image src={`https://eu.ui-avatars.com/api/?name=${name}+${surname}+&size=512&background=${color.substring(1)}&color=ffff`} wrapped ui={false} />
                                 <Card.Content>
                                     <Card.Description textAlign='center' extra>
-                                        <Statistic size='mini' horizontal>
-                                            <Statistic.Value>{thanks}</Statistic.Value>
-                                            <Statistic.Label>Reputation</Statistic.Label>
-                                        </Statistic>
+                                        <span title="Total reputation">
+                                            <Statistic size='mini' horizontal>
+                                                <Statistic.Value>{thanks}</Statistic.Value>
+                                                <Statistic.Label>Reputation</Statistic.Label>
+                                            </Statistic>
+                                        </span>
                                     </Card.Description>
                                 </Card.Content>
                                 <Card.Content extra>
                                     {/*EMPIEZA EXTRA*/}
                                     <a>
                                         <Header as='h5' textAlign='center'>
-                                            <Label color='yellow'>
-                                                {golds.length}
-                                            </Label>
-                                            <Label color='grey'>
-                                                {silvers.length}
-                                            </Label>
-                                            <Label color='brown'>
-                                                {bronzes.length}
-                                            </Label>
+                                            <Popup
+                                                trigger={<Label color='yellow'>
+                                                    {golds.length}
+                                                </Label>}
+                                                content="Total gold awards"
+                                            />
+                                            <Popup
+                                                trigger={<Label color='grey'>
+                                                    {silvers.length}
+                                                </Label>}
+                                                content="Total silver awards"
+                                            />
+                                            <Popup
+                                                trigger={<Label color='brown'>
+                                                    {bronzes.length}
+                                                </Label>}
+                                                content="Total bronze awards"
+                                            />
                                         </Header>
                                     </a>
                                     {/*TERMINA EXTRA*/}
@@ -190,7 +201,7 @@ export default class Profile extends Component {
                                                                                         >
                                                                                             <p>Gold Award Received!</p>
                                                                                             <p>From: {gold.sender}</p>
-                                                                                            <p>To: { name + " " + surname}</p>
+                                                                                            <p>To: {name + " " + surname}</p>
                                                                                         </Popup>
                                                                                     )
                                                                                 }
@@ -214,7 +225,7 @@ export default class Profile extends Component {
                                                                                         >
                                                                                             <p>Silver Award Received!</p>
                                                                                             <p>From: {silver.sender}</p>
-                                                                                            <p>To: { name + " " + surname}</p>
+                                                                                            <p>To: {name + " " + surname}</p>
                                                                                         </Popup>
                                                                                     )
                                                                                 }
@@ -238,7 +249,7 @@ export default class Profile extends Component {
                                                                                         >
                                                                                             <p>Bronze Award Received!</p>
                                                                                             <p>From: {bronze.sender}</p>
-                                                                                            <p>To: { name + " " + surname}</p>
+                                                                                            <p>To: {name + " " + surname}</p>
                                                                                         </Popup>
                                                                                     )
                                                                                 }
@@ -282,7 +293,7 @@ export default class Profile extends Component {
                                                     >
                                                         <p>Gold Award Received!</p>
                                                         <p>From: {gold.sender}</p>
-                                                        <p>To: { name + " " + surname}</p>
+                                                        <p>To: {name + " " + surname}</p>
                                                         <p>Review: {gold.reviewId}</p>
                                                     </Popup>
                                                 )
@@ -305,7 +316,7 @@ export default class Profile extends Component {
                                                     >
                                                         <p>Silver Award Received!</p>
                                                         <p>From: {silver.sender}</p>
-                                                        <p>To: { name + " " + surname}</p>
+                                                        <p>To: {name + " " + surname}</p>
                                                         <p>Review: {silver.reviewId}</p>
                                                     </Popup>
                                                 )
@@ -328,7 +339,7 @@ export default class Profile extends Component {
                                                     >
                                                         <p>Bronze Award Received!</p>
                                                         <p>From: {bronze.sender}</p>
-                                                        <p>To: { name + " " + surname}</p>
+                                                        <p>To: {name + " " + surname}</p>
                                                         <p>Review: {bronze.reviewId}</p>
                                                     </Popup>
                                                 )
