@@ -5,16 +5,22 @@ import RewardsContract from "./contracts/Rewards.json";
 import Web3 from 'web3';
 import './App.css';
 import api from './api'
-import { Dimmer, Loader } from 'semantic-ui-react';
+import { Dimmer, Loader, Header, Image, Button, Modal } from 'semantic-ui-react';
+import logometamask from './assets/metamask.png';
+import logo from './assets/logo-revlounge-white.png'
 
+
+const revlounge = 'http://localhost:3000'
 
 class App extends Component {
 
   async componentDidMount() {
     await this.loadWeb3()
     await this.loadBlockchainData()
-    await this.getUrlInfo();
-    await this.getReputation(this.state.to);
+    if (this.state.metamask) {
+      await this.getUrlInfo();
+      await this.getReputation(this.state.to);
+    }
   }
 
   async loadWeb3() {
@@ -26,7 +32,7 @@ class App extends Component {
       window.web3 = new Web3(window.web3.currentProvider)
     }
     else {
-      window.alert('Non-Ethereum browser detected. You should consider trying MetaMask!')
+      this.setState({ metamask: false })
     }
   }
 
@@ -38,11 +44,11 @@ class App extends Component {
       //Search if tipper is registered
       if (this.state.account !== '') {
         let _tipper = await api.getReviewerByAccount(this.state.account);
-        if (_tipper != null) {
+        console.log(_tipper)
+        if (_tipper.data.data._id != null) {
           let name = _tipper.data.data.name;
           name = name.concat(" ");
           name = name.concat(_tipper.data.data.surname);
-          console.log("Tipper name: ", name)
           this.setState({ tipper: name })
         }
       }
@@ -53,15 +59,11 @@ class App extends Component {
         RewardsContract.abi,
         deployedNetwork.address
       );
-      this.setState({ ready: false });
       // Set web3, accounts, and contract to the state, and then proceed with an
       // example of interacting with the contract's methods.
       this.setState({ web3, contract: instance });
     } catch (error) {
       // Catch any errors for any of the above operations.
-      alert(
-        `Failed to load web3, accounts, or contract. Check console for details.`
-      );
       console.error(error);
     }
   }
@@ -83,6 +85,9 @@ class App extends Component {
       silver: [],
       bronzes: [],
       ready: false,
+      rev: true,
+      metamask: true,
+      error: '',
     }
 
     this.sayThanks = this.sayThanks.bind(this);
@@ -166,34 +171,79 @@ class App extends Component {
     let _review = url.searchParams.get("rev");
     if (_review != null) {
       let account = await this.state.contract.methods.getReviewerByReview(_review).call();
-      if (account != null) {
+      if (account != 0) {
         let _reviewer = await api.getReviewerByAccount(account);
         this.setState({ to: account, review_id: _review, reviewer: _reviewer })
+      } else {
+        this.setState({ rev: false, error: 'No review detected! Check if the review is registered in our platform.' })
       }
+    } else {
+      this.setState({ rev: false })
+      this.setState({ rev: false, error: 'No review detected! Check if the review is registered in our platform.' })
     }
 
   }
 
 
   render() {
-    if (this.state.ready) {
+    if (!this.state.ready) {
+      if (!this.state.metamask) {
+        return (
+          <Dimmer page active>
+            <Image src={logometamask} size='small' inline="centered"></Image>
+            <Header inverted>Non-Ethereum browser detected. You should consider trying Metamask!</Header>
+            <Modal
+              trigger={<Button>How to install it?</Button>}
+              actions={['Snooze', { key: 'done', content: 'Done', positive: true }]}
+            >
+              <Modal.Header>
+                What is MetaMask?
+              </Modal.Header>
+              <Modal.Content>
+                <a href='https://metamask.io'>MetaMask</a> is an extension for Chrome or Firefox that connects to an Ethereum network and allows to interact with dapps like this one.
+                <Header as='h3'>Installing Metamask</Header>
+                <ul>
+                  <li>To install MetaMask for Chrome, go to the <a href='https://chrome.google.com/webstore/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn'>Chrome Web Store</a> and click the <b>Add to Chrome</b> button.</li>
+                  <li>To install MetaMask for FireFox, go to the <a href='https://addons.mozilla.org/en-US/firefox/addon/ether-metamask/'>Firefox Add-ons page</a> and click the <b>Add to Firefox</b> button.</li>
+                </ul>
+                  Then import your private keys from ganache using the MENEMONIC as import seed phrase. Now you will be ready to use our dapp.
+                </Modal.Content>
+            </Modal>
+          </Dimmer>
+        )
+      } else if (!this.state.rev) {
+        return (
+          <Dimmer page active>
+            <Image src={logo} href={revlounge} size='medium' centered></Image>
+            <Header inverted>{this.state.error}</Header>
+          </Dimmer>
+        )
+      } else {
+        return (
+          <Dimmer page active>
+            <Loader active size='massive' inline="centered">Loading...</Loader>
+          </Dimmer>
+        )
+      }
+    } else if(this.state.account === this.state.to){
+      return (
+        <Dimmer page active>
+          <Image src={logo} size='medium' href={revlounge} centered></Image>
+          <Header inverted>Are you trying to tip your own review? Nice try ;)</Header>
+        </Dimmer>
+      )
+    } else {
       return (
         <div>
           {!this.state.isSubmitted ? (
-            <Rewards tipReviewer={this.tipReviewer} sayThanks={this.sayThanks} giveAward={this.giveAward} reputation={this.state.reputation} reviews={this.state.reviews}
+            <Rewards tipReviewer={this.tipReviewer} sayThanks={this.sayThanks} giveAward={this.giveAward} reputation={this.state.reputation} reviews={this.state.reviewer.data.data.reviews.length}
               golds={this.state.golds} silvers={this.state.silvers} bronzes={this.state.bronzes}
               from={this.state.account} to={this.state.to} reviewer={this.state.reviewer} reviewid={this.state.review_id} tipper={this.state.tipper} />
           ) : (
             <RewardsSuccess isSuccess={this.state.isSuccess} setSubmission={this.setSubmission} />
           )}
-        </div>
+        </div >
       );
-    } else {
-      return (
-        <Dimmer page active>
-            <Loader active size='massive' inline="centered">Loading...</Loader>
-        </Dimmer>
-      )
     }
   }
 }

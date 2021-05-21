@@ -6,11 +6,14 @@ import 'semantic-ui-css/semantic.min.css';
 import logo from '../assets/logo-revlounge.png'
 import Web3 from 'web3'
 import Identicon from 'identicon.js'
-
+import api from '../api'
 const stc = require('string-to-color');
 const ipfsClient = require('ipfs-http-client')
 const ipfs = ipfsClient({ host: 'ipfs.infura.io', port: 5001, protocol: 'http' })
 const md5 = require('md5')
+
+const revlounge = 'http://localhost:3000'
+
 
 function createHash(from, to, type, idreview) {
     let award = from;
@@ -37,7 +40,6 @@ function uploadIPFS(award, type, giveAward) {
 
 const Rewards = ({ tipReviewer, sayThanks, giveAward, reputation, reviews, golds, silvers, bronzes, from, to, reviewer, reviewid, tipper }) => {
     const inputRef = React.createRef();
-    var active = false;
     var amount = 0;
     return (
         <div>
@@ -47,13 +49,13 @@ const Rewards = ({ tipReviewer, sayThanks, giveAward, reputation, reviews, golds
                     <Segment>
                         <Form size='large'>
 
-                            <Image src={logo} centered size='medium' />
+                            <Image src={logo} href={revlounge} centered size='medium' />
                             <Header as='h3' textAlign='left'>Your information:</Header>
                             <Segment textAlign='center'>{from}</Segment>
                             <Segment textAlign='center'>
                                 {(tipper === '') ? (<div><p>You are not registered in RevLounge.
                                 Join us if you are a reviewer and want to star winning reputation and unique rewards!</p>
-                                    <Button href="http://localhost:3001/join" >Register</Button></div>) :
+                                    <Button href={revlounge + "/join"} >Register</Button></div>) :
                                     (<div>
                                         <Image spaced='right' src={`https://eu.ui-avatars.com/api/?name=${tipper}+&size=512&background=${stc(from).substring(1)}&color=ffff`} avatar />
                                         <span>{tipper}</span>
@@ -193,23 +195,35 @@ const Rewards = ({ tipReviewer, sayThanks, giveAward, reputation, reviews, golds
                                     <Statistic>
                                         <Statistic.Label>Reputation</Statistic.Label>
                                         <Statistic.Value>
-                                            <Label color='blue'>
+                                            <Popup
+                                                trigger={<Label color='blue'>
                                                 {reputation}
-                                            </Label>
+                                            </Label>}
+                                                content="Total reputation tokens"
+                                            />
                                         </Statistic.Value>
                                     </Statistic>
                                     <Statistic>
                                         <Statistic.Label>Rewards</Statistic.Label>
                                         <Statistic.Value>
-                                            <Label color='yellow'>
-                                                {golds.length}
-                                            </Label>
-                                            <Label color='grey'>
-                                                {silvers.length}
-                                            </Label>
-                                            <Label color='brown'>
-                                                {bronzes.length}
-                                            </Label>
+                                            <Popup
+                                                trigger={<Label color='yellow'>
+                                                    {golds.length}
+                                                </Label>}
+                                                content="Total gold awards"
+                                            />
+                                            <Popup
+                                                trigger={<Label color='grey'>
+                                                    {silvers.length}
+                                                </Label>}
+                                                content="Total silver awards"
+                                            />
+                                            <Popup
+                                                trigger={<Label color='brown'>
+                                                    {bronzes.length}
+                                                </Label>}
+                                                content="Total bronze awards"
+                                            />
                                         </Statistic.Value>
                                     </Statistic>
                                 </Statistic.Group>
