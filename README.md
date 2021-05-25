@@ -2,12 +2,12 @@
 El desarrollo de este proyecto se ha realizado íntegramente en Windows 10.
 
 Lista de dependencias:
-•	Node
-•	Truffle suite
-•	Ganache or ganache-cli
-•	MetaMask
-•	Yarn
-•	MongoDB
+-	Node
+-	Truffle suite
+-	Ganache or ganache-cli
+-	MetaMask
+-	Yarn
+-	MongoDB
 
 Instalación:
 Node 
@@ -42,12 +42,12 @@ https://github.com/carlosrodrih/Rewards
 
 #	Después de instalar las dependencias y descargar el código:
 Desde la terminal de Visual Studio Code realice yarn install desde las siguientes carpetas:
-•	rewards
-•	rewards-app
+-	rewards
+-	rewards-app
 Desde rewards-app, realice la migración de los contratos, ejecute:
 truffle migrate
 Desde rewards-app/server escriba en la terminal, si este comando le da problemas asegúrese de tener yarn y npm en el path:
 nodemon
 Ya está todo liso para arrancar la aplicación, lance las aplicaciones en este orden:
-•	En localhost:3000, desde la carpeta de rewards-app -> yarn start
-•	En localhost:3001, desde la carpeta de rewards -> yarn start
+-	En localhost:3000, desde la carpeta de rewards-app -> yarn start
+-	En localhost:3001, desde la carpeta de rewards -> yarn start
