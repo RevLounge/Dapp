@@ -8,7 +8,7 @@ createReviewer = (req, res) => {
     if (!body) {
         return res.status(400).json({
             success: false,
-            error: 'You must provide a reviewer',
+            error: 'You have to send a body to the request',
         })
     }
 
@@ -40,13 +40,13 @@ createReviewer = (req, res) => {
             return res.status(201).json({
                 success: true,
                 id: reviewer._id,
-                message: 'The reviewer has been created successfully!',
+                message: 'We have created the Reviewer!',
             })
         })
         .catch(error => {
             return res.status(400).json({
                 error,
-                message: 'The reviewer has not been created!',
+                message: 'We can not create the Reviewer!',
             })
         })
 }
@@ -57,7 +57,7 @@ addRandomReviewtoReviewer = async (req, res) => {
     if (!body) {
         return res.status(400).json({
             success: false,
-            error: 'You must provide a body to update',
+            error: 'You have to send a body to the request',
         })
     }
 
@@ -72,7 +72,7 @@ addRandomReviewtoReviewer = async (req, res) => {
         if (err) {
             return res.status(404).json({
                 err,
-                message: 'The reviewer has not been found!',
+                message: 'We can not find the Reviewer',
             })
         }
         reviewer.reviews.push(randomReview)
@@ -82,13 +82,13 @@ addRandomReviewtoReviewer = async (req, res) => {
                 return res.status(200).json({
                     success: true,
                     id: reviewer._id,
-                    message: 'The reviewer has been updated!',
+                    message: 'The Reviewer has been updated!',
                 })
             })
             .catch(error => {
                 return res.status(404).json({
                     error,
-                    message: 'The reviewer has not been updated!',
+                    message: 'The Reviewer has not been updated!',
                 })
             })
     })
@@ -99,7 +99,7 @@ updateReviewer = async(req, res) => {
     if (!body) {
         return res.status(400).json({
             success: false,
-            error: 'You must provide a body to update',
+            error: 'You have to send a body to the request',
         })
     }
 
@@ -107,7 +107,7 @@ updateReviewer = async(req, res) => {
         if (err) {
             return res.status(404).json({
                 err,
-                message: 'Movie not found!',
+                message: 'We can not find the Reviewer',
             })
         }
         reviewer.name = body.name
@@ -123,13 +123,13 @@ updateReviewer = async(req, res) => {
                 return res.status(200).json({
                     success: true,
                     id: reviewer._id,
-                    message: 'Reviewer updated!',
+                    message: 'The reviewer has been updated!',
                 })
             })
             .catch(error => {
                 return res.status(404).json({
                     error,
-                    message: 'Reviewer not updated!',
+                    message: 'It was not possible to update de Reviewer!',
                 })
             })
     })
@@ -144,7 +144,7 @@ deleteReviewer = async (req, res) => {
         if (!reviewer) {
             return res
                 .status(404)
-                .json({ success: false, error: `Reviewer not found` })
+                .json({ success: false, error: `We can not find the Reviewer` })
         }
 
         return res.status(200).json({ success: true, data: reviewer })
@@ -160,7 +160,7 @@ getReviewerById = async (req, res) => {
         if (!reviewer) {
             return res
                 .status(404)
-                .json({ success: false, error: `Reviewer not found` })
+                .json({ success: false, error: `We can not find the Reviewer` })
         }
         return res.status(200).json({ success: true, data: reviewer })
     }).catch(err => console.log(err))
@@ -174,7 +174,7 @@ getReviewers = async (req, res) => {
         if (!reviewers.length) {
             return res
                 .status(404)
-                .json({ success: false, error: `Reviewer not found` })
+                .json({ success: false, error: `We can not find the Reviewer` })
         }
         return res.status(200).json({ success: true, data: reviewers })
     }).catch(err => console.log(err))
@@ -189,7 +189,7 @@ getReviewerByReviewId = async (req, res) => {
         if (!reviewer) {
             return res
                 .status(404)
-                .json({ success: false, error: `Review not found` })
+                .json({ success: false, error: `We can not find the Reviewer` })
         }
         return res.status(200).json({ success: true, data: reviewer })
     }).catch(err => console.log(err))
@@ -204,7 +204,7 @@ getReviewerByAccount = async (req, res) => {
         if (!reviewer) {
             return res
                 .status(200)
-                .json({ success: false, data: `Account not found` })
+                .json({ success: false, data: `We can not find the Account` })
         }
         return res.status(200).json({ success: true, data: reviewer })
     }).catch(err => console.log(err))
