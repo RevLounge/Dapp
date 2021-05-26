@@ -146,7 +146,7 @@ const paneles = [
               <p>yarn add @carlosrodriher/rewards-button</p>
             </Segment>
           </h3>
-          <h3>■ And now you can just need to give us the review ID by calling our package.</h3>
+          <h3>■ And now you just need to give us the review ID by calling our package.</h3>
           <h3>■ Use in React:</h3>
           <h3>
             <Segment>
