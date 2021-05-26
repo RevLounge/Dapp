@@ -7,6 +7,9 @@ import orcid4 from "./images/ORCID-4.png"
 import F10001 from "./images/F1000-1.png"
 import F10002 from "./images/F1000-2.png"
 import F10003 from "./images/F1000-3.png"
+import tip from "./images/Send_tip.png"
+import reputation from "./images/Send_reputation.png"
+import award from "./images/Send_award.png"
 
 
 const paneles = [
@@ -95,6 +98,33 @@ const paneles = [
   },
   {
     key: "4",
+    title: {
+      content: (
+        <Label
+          color="blue"
+          content={"How can I send a reward?"}
+          size="big"
+        />
+      ),
+    },
+    content: {
+      content: (
+        <Message info header={"We will explain it to you"} content={<Segment>
+          <h3>■ Once you have already entered in the Rewards panel, after pressing the "Support this review" next to a review, you can choose among three different reward's options: Send a tip, send a Reputation (RPT) token or send a unique token (NFT).</h3>
+          <h3>■ If you want to send a tip, just select the first option and type the amount in ETH that you want to send, then just accept the Metamask transaction.</h3>
+          <Image centered src={tip} />
+          <h3>■ If you rather send a reputation token (RPT), just select the second option and accept the metamask transaction, you can see how you have incremented the reviewer's reputation on his profile page.</h3>
+          <Image centered src={reputation} />
+          <h3>■ If you prefer to send an award to the review, just select the third option, then select which type of reward you want to send and finally accept the Metamask transaction, you can see the NFT generated on the reviewer's profile page or on the review's information.</h3>
+          <Image centered src={award} />
+          <h3>■ And that's it! Now you know how to show appreciation to a reviewer for his reviews!</h3>
+        </Segment>
+        } />
+      ),
+    },
+  },
+  {
+    key: "5",
     title: {
       content: (
         <Label
