@@ -1,21 +1,10 @@
 import React, { Component } from "react";
-import {
-  Button,
-  Form,
-  Grid,
-  Header,
-  Image,
-  Message,
-  Segment,
-  Dimmer,
-  Icon,
-  Popup,
-} from "semantic-ui-react";
-import { Link, Redirect } from "react-router-dom";
+import { Button, Form, Grid, Header, Image, Message, Segment, Dimmer, Icon, Popup } from "semantic-ui-react";
+import { Link } from "react-router-dom";
 import logo from "../../assets/logo-revlounge.png";
 const { promisify } = require("util");
 
-class LoginForm extends Component {
+class RegisterForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -90,11 +79,7 @@ class LoginForm extends Component {
     }));
     this.setState({ orcid });
   };
-  handleChangeInputAccount = async (event) => {
-    const rating = event.target.validity.valid
-      ? event.target.value
-      : this.state.rating;
-  };
+
 
   handleChangeInputCompany = async (event) => {
     const company = event.target.value;
@@ -197,7 +182,7 @@ class LoginForm extends Component {
       );
       if (!pattern.test(email)) {
         isValid = false;
-        errors["email"] = "Please enter a valid email amigo.";
+        errors["email"] = "Please enter a valid email.";
       }
     }
 
@@ -546,4 +531,4 @@ class LoginForm extends Component {
   }
 }
 
-export default LoginForm;
+export default RegisterForm;

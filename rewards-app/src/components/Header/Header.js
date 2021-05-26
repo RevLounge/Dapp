@@ -1,19 +1,11 @@
 import React, { Component } from "react";
-import {
-  Container,
-  Segment,
-  Image,
-  Button,
-  Grid,
-  GridColumn,
-} from "semantic-ui-react";
+import {Container, Segment, Image, Button, Grid, GridColumn } from "semantic-ui-react";
 import "./Header.css";
 import { Link } from "react-router-dom";
 import logo from "./logo.png";
-//import Identicon from 'identicon.js';
 import api from "../../api";
 
-export default class HeaderSearch extends Component {
+export default class Header extends Component {
   constructor(props) {
     super(props);
     this.state = {

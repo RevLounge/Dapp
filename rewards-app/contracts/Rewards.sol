@@ -15,7 +15,7 @@ contract Rewards {
         reputationtoken = _reputationToken;
         awardsToken = _awardsToken;
     }
-
+//Estructura de Award modificada para contener el hash de IPFS del NFT y el identificador de revisión asociado
     struct Award {
         uint id;
         address reviewer;
@@ -31,13 +31,14 @@ contract Rewards {
         uint tipAmount;
         address author;
         address[] reviewers;
-        mapping(address => string) reviews; //TODO update to array of strings
+        mapping(address => string) reviews;
     }
 
     Paper[] public papers;
     mapping(address => bool) public reviewerExists;
     address[] public reviewers;
     mapping(address => string []) awards;
+    //Mapping agregado para poder relacionar las cuentas de los revisores con los identificadores de sus revisiones
     mapping(string => address) reviews;
 
     event PaperCreated(
@@ -141,6 +142,7 @@ contract Rewards {
     function getReputation(address _reviewer) public view returns (uint256) {
         return reputationtoken.balanceOf(_reviewer);
     }
+    //Función modificada para recibir el hash IPFS del NFT y el identificador de la revisión, se incluyen en el encode del hash para mintearlos
     function giveAward(uint _id, address payable _reviewer, uint _awardId, string memory hashIPFS, string memory reviewId ) public payable{
         require(_id < papers.length);
         require(_awardId < 3);
@@ -178,7 +180,7 @@ contract Rewards {
         require(getPaperReviewerCount(_id) > 0);
         return papers[_id].reviews[_reviewer];
     }
-
+//Función añadida para devolver la cuenta de un revisor en base al identificador de una de sus revisiones
     function getReviewerByReview(string memory reviewId) public view returns (address){
         return reviews[reviewId];
     }

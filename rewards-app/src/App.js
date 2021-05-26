@@ -1,17 +1,13 @@
 import { Component } from 'react';
 import './App.css';
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-} from 'react-router-dom'
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import Web3 from 'web3';
 import { Loader, Dimmer, Image, Header, Button, Modal } from 'semantic-ui-react'
-import HeaderSearch from './components/Header/HeaderSearch';
+import HeaderSearch from './components/Header/Header';
 import TableReviewers from './components/Table/TableReviewers';
-import LoginForm from './components/LoginForm/LoginForm';
+import RegisterForm from './components/RegisterForm/RegisterForm';
 import Profile from './components/Profile/Profile';
-import ImportReviews from './components/LoginForm/importReviews';
+import ImportReviews from './components/RegisterForm/importReviews';
 import RewardsContract from './contracts/Rewards.json';
 import FAQ from './components/FAQ/faq';
 import api from './api';
@@ -57,12 +53,6 @@ class App extends Component {
         await instance.methods
           .createPaper("paper")
           .send({ from: this.state.account })
-          /*.on('error', function(error, receipt) {
-          alert(
-            `Operation cancelled.`,
-          );
-          this.setState({ ready: false })
-        })*/
           .once("receipt", (receipt) => {
           });
       }
@@ -200,7 +190,7 @@ class App extends Component {
             )}>
           </Route>
           <Route exact path="/join">
-            <LoginForm addReviewer={this.addReviewer} account={this.state.account}></LoginForm>
+            <RegisterForm addReviewer={this.addReviewer} account={this.state.account}></RegisterForm>
           </Route>
           <Route exact
             path="/reviewer/:id"

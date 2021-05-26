@@ -47,20 +47,7 @@ export default class Profile extends Component {
     }
 
     handleUpdateReviewer = async () => {
-
-
         window.location.href = `/importReviews/${this.props.id}`
-
-        /*const { id, reviewId } = this.state
-        const payload = { reviewId }
-        window.alert('hola')
-
-        {await api.addRandomReviewtoReviewer(id, payload).then(res => {
-            window.alert(`Reviewer updated successfully`)
-            this.setState({
-                reviewId: '',
-            })
-        })}*/
     }
 
 
@@ -179,7 +166,7 @@ export default class Profile extends Component {
                                                 </List.Content>
                                                 <List.Description>
                                                     <Modal
-                                                        trigger={<Button>Show Adwards</Button>}
+                                                        trigger={<Button>Show Awards</Button>}
                                                     >
                                                         <Modal.Header>Awards for {review.reviewId}</Modal.Header>
                                                         <Modal.Content>

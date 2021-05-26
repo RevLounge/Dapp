@@ -4,34 +4,7 @@ import { Button, Form, Grid, Header, Image, Popup, Segment, Dimmer, Icon } from 
 import { Link } from 'react-router-dom'
 import logo from '../../assets/logo-revlounge.png'
 
-import styled from 'styled-components'
 
-const Title = styled.h1.attrs({
-    className: 'h1',
-})``
-
-const Wrapper = styled.div.attrs({
-    className: 'form-group',
-})`
-    margin: 0 30px;
-`
-
-const Label = styled.label`
-    margin: 5px;
-`
-
-const InputText = styled.input.attrs({
-    className: 'form-control',
-})`
-    margin: 5px;
-`
-
-
-const CancelButton = styled.a.attrs({
-    className: `btn btn-danger`,
-})`
-    margin: 15px 15px 15px 5px;
-`
 
 export default class importReviews extends Component {
 
