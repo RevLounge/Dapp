@@ -3,6 +3,7 @@ import { Card, Grid, Statistic, Label, Header, List, Image, GridColumn, Containe
 import api from '../../api'
 import boton from './boton.png'
 import './Profile.css'
+import {Button as RewardButton} from '@carlosrodriher/reward-button'
 const stc = require('string-to-color');
 
 
@@ -155,14 +156,9 @@ export default class Profile extends Component {
                                                 <List.Content>
                                                     <List.Header><a href={review.reviewId} target="_blank">{review.title}</a></List.Header>
                                                     {review.description}
-                                                    <Image
-                                                        src={boton}
-                                                        as='a'
-                                                        size='tiny'
-                                                        floated='right'
-                                                        href={`http://localhost:3001/?rev=${review.reviewId}`}
-                                                        target='_blank'
-                                                    />
+                                                    <div class="rewards">
+                                                    <RewardButton review={review.reviewId}></RewardButton>
+                                                    </div>
                                                 </List.Content>
                                                 <List.Description>
                                                     <Modal

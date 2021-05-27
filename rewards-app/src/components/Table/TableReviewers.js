@@ -50,7 +50,7 @@ export default class HeaderSearch extends Component {
             var color = stc(reviewer.account)
             return (
                 <Table.Body>
-                    <Table.Row key={key}>
+                    <Table.Row key={reviewer._id}>
                         <Table.Cell textAlign="left">
                             <Header as='h3' textAlign='left'>
                                 <Image
@@ -63,7 +63,7 @@ export default class HeaderSearch extends Component {
                         </Table.Cell>
                         <Table.Cell textAlign='center' >
                             <Header as='h3'>
-                                {thanks[key]}
+                                {thanks[reviewer._id]}
                                         &nbsp;
                                         <Icon name="thumbs up outline" color="blue"></Icon>
                             </Header>
@@ -71,13 +71,13 @@ export default class HeaderSearch extends Component {
                         <Table.Cell>
                             <Header as='h5' textAlign='center'>
                                 <Label color='yellow'>
-                                    {golds[key].length}
+                                    {golds[reviewer._id].length}
                                 </Label>
                                 <Label color='grey'>
-                                    {silvers[key].length}
+                                    {silvers[reviewer._id].length}
                                 </Label>
                                 <Label color='brown'>
-                                    {bronzes[key].length}
+                                    {bronzes[reviewer._id].length}
                                 </Label>
                             </Header>
                         </Table.Cell>

@@ -89,7 +89,7 @@ const paneles = [
           <Image centered size="medium" src={F10001} />
           <h3>2º: Press the button "Cite this report".</h3>
           <Image centered size="medium" src={F10002} />
-          <h3>3º: You will see the URL at the bottom of the popup.</h3>
+          <h3>3º: Copy the URL that is between parenthesis.</h3>
           <Image centered size="large" src={F10003} />
         </Segment>
         } />
@@ -141,9 +141,9 @@ const paneles = [
           <h3>■ Just tipe this command:</h3>
           <h3>
             <Segment>
-              <p>npm install @carlosrodriher/rewards-button</p>
+              <p>npm install @carlosrodriher/reward-button</p>
               <p>or</p>
-              <p>yarn add @carlosrodriher/rewards-button</p>
+              <p>yarn add @carlosrodriher/reward-button</p>
             </Segment>
           </h3>
           <h3>■ And now you just need to give us the review ID by calling our package.</h3>
@@ -151,7 +151,7 @@ const paneles = [
           <h3>
             <Segment>
               <p>
-                import RewardButton from '@carlosrodriher/rewards-button'
+              import {'Button as RewardButton'} from '@carlosrodriher/reward-button'
               </p>
               <p>
                 {`<RewardButton review="review url"></RewardButton>`}

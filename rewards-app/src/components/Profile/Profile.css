@@ -1,3 +1,7 @@
 .ui.card {
-    border-top: 1px !important; 
+    border-top: 1px !important;
+}
+
+.rewards {
+    float: right;
 }
